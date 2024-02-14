@@ -1,0 +1,10 @@
+This text file represents the workflow of HiveEd webpage:
+Developer : Raghul. R
+Support : Rajnish. J
+
+
+Functions: 
+* Gmail Log-in
+* course details
+* insta page
+* aptitude problems
