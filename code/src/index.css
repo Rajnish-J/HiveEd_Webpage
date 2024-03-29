@@ -48,3 +48,7 @@ textarea::placeholder{
     transform: translate(-50%, 50%);
   }
 }
+
+.nav.active{
+  border-bottom: 2px solid red;
+}
