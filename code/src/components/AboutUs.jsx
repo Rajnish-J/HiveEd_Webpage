@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import About_Us from '../images/Aboutus/aboutus.png';
+import Rajnish from '../images/Aboutus/Rajnish.png';
 
 const AboutUs = () => {
   return (
@@ -38,8 +39,9 @@ const AboutUs = () => {
           <div className='flex flex-col justify-center items-center'>
 
             <div className='flex flex-col justify-center items-center'>
-              <div className='bg-gray-400 rounded-full w-[5.5vw] h-[10vh]'><img src="" alt="" /></div>
-              <p>Mr.Rajnish</p>
+              <div className=''>
+              <img src={Rajnish} alt="Rajnish" className='object-fill rounded-full h-[13vh] w-[7vw]'/></div>
+              <p>Mr.Rajnish J</p>
               <p>Chief Executive Officer, Founder</p>
             </div>
 
