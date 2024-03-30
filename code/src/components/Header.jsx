@@ -16,7 +16,7 @@ const Header = () => {
                     <button className={`mx-4 nav ${location.pathname === '/aboutus/' ? 'active' : ''}`}><NavLink to='/aboutus/'>About Us</NavLink></button>
                     <button className={`mx-4 nav ${location.pathname === '/courses/' ? 'active' : ''}`}><NavLink to='/courses/'>Courses</NavLink></button>
                     <button className='mx-4'>Blog</button>
-                    <button className='mx-4'>Careers</button>
+                    <button className={`mx-4 nav ${location.pathname === '/careers/' ? 'active' : ''}`}><NavLink to='/careers/'>Careers</NavLink></button>
                     <button className='mx-4'>Contact Us</button>
                 </div>
                 

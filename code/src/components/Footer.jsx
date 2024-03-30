@@ -6,7 +6,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 
 const Footer = () => {
   return (
-    <div className='bg-[#f3dbf9] py-8'>
+    <div className='bg-[#f3dbf9] border-t-2 border-[#a93fc4] py-8'>
         <div className='grid grid-cols-5 px-36 pb-8'>
             
             <div>
