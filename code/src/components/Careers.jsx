@@ -1,83 +1,143 @@
-import React from 'react';
-import Header from './Header';
+import React, { useState } from 'react';
+import Navbar from './Navbar';
 import Footer from './Footer';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import {Divider, TextField, Button, FormControl} from '@mui/material';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
 
 const Careers = () => {
+  const [formDataArray, setFormDataArray] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    // Handle the selected file (e.g., upload to server)
+
+    if(!file.type.match('application/pdf')){
+        return;
+    }
+    setSelectedFile(file);
+  };
+
+  const initialValues = {
+    name: '',
+    email: '',
+    number: '',
+    cv: '',
+    resume: ''
+  };
+
+  const onSubmit = (values, onSubmitProps) => {
+    const formData = {
+        name: values.name,
+        email: values.email,
+        number: values.number,
+        cv: values.cv,
+        resume: values.reusme
+    }
+    setFormDataArray([...formDataArray, formData]);
+    onSubmitProps.resetForm();
+  };
+
+  const validate = Yup.object({
+    name: Yup.string().required('* Name is required'),
+    email: Yup.string().email('Invalid Email').required('* Email is required'),
+    number: Yup.number().required('* Contact Number is required'),
+    cv: Yup.string().required('* Cover Letter is required'),
+  });
+
+//   const [focused, setFocused] = useState(false);
+
   return (
     <div>
 
-        <Header/>
+        <Navbar/>
 
         <div className='mx-[9vw] mt-40'>
 
-            <div className='mb-24'>
-                <h1 className='text-[#bc43df] text-4xl my-12 font-bold'>Join Our Team, <br /> Shape the Future.</h1>
-                <p className='text-lg'>Welcome to our Careers page! Here, you'll discover more than just job opportunities – you'll find a community of passionate individuals dedicated to making a difference. At HiveED, we believe that innovation thrives in an inclusive and diverse environment. Whether you're an experienced professional or just starting your career journey, we invite you to explore our openings and embark on a rewarding path with us. Join us in shaping the future and unleashing your potential.</p>
-            </div>
+            <section>
+                <h1 className='text-[#bc43df] text-4xl my-12 font-bold'>Join Our Team, <br className='hidden lg:inline'/> Shape the Future.</h1>
+                <p className='text-lg text-justify'>Welcome to our Careers page! Here, you'll discover more than just job opportunities – you'll find a community of passionate individuals dedicated to making a difference. At HiveED, we believe that innovation thrives in an inclusive and diverse environment. Whether you're an experienced professional or just starting your career journey, we invite you to explore our openings and embark on a rewarding path with us. Join us in shaping the future and unleashing your potential.</p>
+            </section>
 
-            <hr className='border border-gray-300'/>
 
-            <div className='mt-20'>
-                <h1 className='text-[#bc43df] font-bold text-2xl'>Current hirings</h1>
-                <div className='bg-[#fbf4fd] flex justify-between px-8 my-8 py-3 rounded-md'>
+            <Divider sx={{backgroundColor: 'rgba(153, 153, 153, 0.2)', margin: '4vw 0'}}/>
+
+
+            <section>
+
+                <h1 className='text-[#bc43df] font-bold text-2xl'>Current Hirings</h1>
+
+                <div className='bg-[#fbf4fd] flex justify-between items-center px-8 py-4 rounded-lg my-6 overflow-hidden'>
                     <h3>Trainer</h3>
                     <KeyboardArrowDownIcon/>
                 </div>
 
-                <div className='bg-[#fbf4fd] flex justify-between px-8 mb-8 py-3 rounded-md'>
-                    <h3>Subject admin</h3>
+                <div className='bg-[#fbf4fd] flex justify-between items-center px-8 py-4 rounded-lg my-6 overflow-hidden'>
+                    <h3>Subject Admin</h3>
                     <KeyboardArrowDownIcon/>
                 </div>
 
-                <div className='bg-[#fbf4fd] flex justify-between px-8 py-3 rounded-md'>
-                    <h3>Open position</h3>
+                <div className='bg-[#fbf4fd] flex justify-between items-center px-8 py-4 rounded-lg my-6 overflow-hidden'>
+                    <h3>Open Position</h3>
                     <KeyboardArrowDownIcon/>
                 </div>
 
-            </div>
+            </section>
 
 
-            <div className='mt-24'>
-                <h1 className='text-[#bc43df] font-bold text-xl mb-12'>Join us here</h1>
+            <section className='my-20'>
+
+                <h1 className='text-[#bc43df] font-bold text-xl mb-8'>Join us here</h1>
                 <p>Join Our Team of Inspiring Educators: <br /> Empower Minds, Shape Futures!</p>
-            </div>
 
-            <div className='bg-white my-20 drop-shadow-2xl flex flex-col mx-40 justify-start p-8'>
-                <h1 className='text-[#bc43df] mb-4 font-bold text-2xl'>Become a HiveEd Instructor</h1>
-                <p className='mb-8'>Ignite your passion with a supportive community of instructors online.</p>
-                <div className='flex flex-col text-center'>
+                <div className='flex flex-col justify-start mt-8 bg-white rounded-lg drop-shadow-2xl p-8 lg:mx-40 overflow-hidden'>
 
-                    <form>
-                        <div className='relative'>
-                            <input type="text" placeholder='Full name' required className='border border-gray-400 bg-[#fafafa] p-2 w-[100%] mb-4'/>
-                            <span className='text-red-600 absolute left-[9.5%] pt-2'>*</span>
-                        </div>
-                        
-                        <div className='relative'>
-                            <input type="email" placeholder='Email Id' required className='border border-gray-400 bg-[#fafafa] p-2 w-[100%] mb-4'/>
-                            <span className='text-red-600 absolute left-[8%] pt-2'>*</span>
-                        </div>
+                    <h1 className='text-[#bc43df] mb-4 font-bold text-2xl'>Become a HiveEd Instructor</h1>
+                    <p className='mb-8'>Ignite your passion with a supportive community of instructors online.</p>
+                    
+                    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validate}>
+                        {(formik) => (
+                            <Form className='text-center'>
+                                <FormControl fullWidth>
+                                    <Field as={TextField} label={<span>Full Name<span className='text-red-700'>*</span></span>} name='name'/>
+                                    {formik.touched.name && formik.errors.name && <ErrorMessage name='name'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>}
+                                </FormControl>
+                                
+                                <FormControl fullWidth sx={{margin: '2vw 0'}}>
+                                    <Field as={TextField} label={<span>Email Id<span className='text-red-700'>*</span></span>} name='email'/>
+                                    <ErrorMessage name='email'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>
+                                </FormControl>
+                                
+                                <FormControl fullWidth>
+                                    <Field as={TextField} label={<span>Contact Number<span className='text-red-700'>*</span></span>} type='number' name='number'/>
+                                    <ErrorMessage name='number'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>
+                                </FormControl>
+                                
+                                <FormControl fullWidth sx={{margin: '2vw 0'}}>
+                                    <Field as={TextField} label={<span>Cover Letter<span className='text-red-700'>*</span></span>} name='cv'/>
+                                    <ErrorMessage name='cv'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>
+                                </FormControl>
 
-                        <div className='relative'>
-                            <input type="number" placeholder='Contact number' required className='border border-gray-400 bg-[#fafafa] p-2 w-[100%] mb-4'/>
-                            <span className='text-red-600 absolute left-[15%] pt-2'>*</span>
-                        </div>
-
-                        <div className='relative'>
-                            <input type="file" placeholder='Resume' required className='border border-gray-400 bg-[#fafafa] p-2 w-[100%] mb-4'/>
-                            <span className='text-red-600 absolute left-[26%] pt-3'><span className='text-black'> - Resume</span>*</span>
-                        </div>
-
-                        <div className='relative'>
-                            <textarea name="" placeholder='Cover letter' rows="6" required className='border border-gray-400 bg-[#fafafa] p-2 w-[100%] mb-4'/>
-                            <span className='text-red-600 absolute left-[11%] pt-2'>*</span>
-                        </div>
-                        <button className='bg-[#bc43df] text-white px-16 py-1 rounded-full'>Register</button>
-                    </form>
-
+                                <FormControl fullWidth sx={{textAlign: 'left', margin: '0.5 0 1vw'}}>
+                                    <div className='inline md:flex items-center' name='resume'>
+                                        <label htmlFor="file-upload">
+                                            <input type="file" id="file-upload" style={{ display: 'none' }} onChange={handleFileChange} name='resume'/>
+                                            <Button variant="contained" component="label" htmlFor="file-upload">Upload Resume</Button>
+                                        </label>
+                                        <div className='text-xl text-black ml-6'>{selectedFile && ( <p>{selectedFile.name}</p>)}</div>
+                                    </div>
+                                </FormControl>
+                                
+                                <Button variant='contained' sx={{backgroundColor: '#be34e5', borderRadius: '3rem', padding: '0.5rem 4rem'}}>Send</Button>
+                            </Form>
+                     )}
+                    </Formik>
+                    
                 </div>
-            </div>
+
+            </section>
 
         </div>
 

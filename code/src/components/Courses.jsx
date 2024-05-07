@@ -1,140 +1,212 @@
-import React from 'react';
-import Header from './Header';
+import {React, useState} from 'react';
+import Navbar from './Navbar';
 import Footer from './Footer';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import Divider from '@mui/material/Divider';
+import {Divider, Button, TextField, FormControl} from '@mui/material';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
 
 const Courses = () => {
+  const [formDataArray, setFormDataArray] = useState([]);
+  
+  const initialValues = {
+        name: '',
+        number: '',
+        message: ''
+  };
+    
+  const onSubmit = (values, onSubmitProps) => {
+    const formData ={
+        name: values.name,
+        number: values.number,
+        message: values.message
+    }
+    
+    setFormDataArray([...formDataArray,formData]);
+    onSubmitProps.resetForm();
+  }
+    
+  const validate = Yup.object({
+        name: Yup.string().required('* Name is required'),
+        number: Yup.number().required('* Mobile Number is required')
+  });
+
   return (
     <div>
 
-        <Header/>
+        <Navbar/>
 
         <div className='mx-[9vw] mt-40'>
 
-            <div>
-                <h1 className='font-bold text-[#bc43df] text-4xl mb-12'>Unlock Your Potential with <br /> Our Comprehensive Course Offerings</h1>
-                <p>Welcome to HiveED! Here, we offer a diverse range of courses designed to empower individuals like you to unlock their full potential <br /> and thrive in today's dynamic world. Our courses cover a wide spectrum of skills, catering to various interests and career paths. <br /> Whether you're looking to enhance your technical proficiency, or acquire new creative skills, we have something for everyone. With <br /> expert-led instruction, hands-on projects, and interactive learning experiences, our platform is your gateway to personal and <br /> professional growth. Explore our courses and embark on a journey of continuous learning and skill mastery.</p>
-            </div>
+            <section>
+                <h1 className='font-bold text-[#bc43df] text-4xl mb-10'>Unlock Your Potential with <br /> Our Comprehensive Course Offerings</h1>
+                <p className='text-justify'>Welcome to HiveED! Here, we offer a diverse range of courses designed to empower individuals like you to unlock their full potential and thrive in today's dynamic world. Our courses cover a wide spectrum of skills, catering to various interests and career paths. Whether you're looking to enhance your technical proficiency, or acquire new creative skills, we have something for everyone. With expert-led instruction, hands-on projects, and interactive learning experiences, our platform is your gateway to personal and professional growth. Explore our courses and embark on a journey of continuous learning and skill mastery.</p>
+            </section>
 
-            <div>
-                <h1 className='text-[#bc43df] text-3xl my-16'>Courses we offer</h1>
 
-                <div className='mx-[9vw]'>
+            <section className='my-20'>
 
-                    <div className='bg-white drop-shadow-2xl rounded-xl mb-12 p-6 flex'>
-                        <div className='mr-[9vw] ml-[1vw]'>
-                            <h1 className='text-[#bc43df] text-2xl mb-8'>Complete Interview <br /> Preparation</h1>
-                            <button className='bg-transparent border mb-8 border-green-300 rounded-full px-5 py-1 text-green-300'>Online Live class</button>
-                            <h4 className='mb-8 text-black'>3 Months <FiberManualRecordIcon className='p-2 text-gray-400'/> Weekdays <span className='text-gray-700'>(Evenings)</span> </h4>
-                            <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
+                <h1 className='text-[#bc43df] text-3xl'>Courses we offer</h1>
+ 
+                <div className='mx-[2vw] md:mx-[9vw] mt-12 mb-20'>
+
+                    <section>
+                        <div className='bg-white drop-shadow-2xl rounded-xl py-6 px-16 flex flex-col md:flex-row justify-center md:justify-between items-center overflow-hidden'>
+                            
+                            <div className='flex flex-col justify-center items-center'>
+                                <h1 className='text-[#bc43df] text-lg md:text-2xl'>Complete Interview Preparation</h1>
+                                <button className='bg-transparent border border-green-300 rounded-full px-5 py-1 text-green-300 my-8'>Online Live class</button>
+                                <h4 className='mb-8 text-black'>3 Months <FiberManualRecordIcon className='p-2 text-gray-400'/> Weekdays <span className='text-gray-700'>(Evenings)</span> </h4>
+                                <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
+                            </div>
+
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 2vw'}} className='hidden lg:inline'/>
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 5vw'}} className='hidden md:inline lg:hidden'/>
+                            <Divider sx={{width: '100%', border:'1px solid rgba(153,153,153,1)', margin: '4vw 0'}} className='inline md:hidden'/>
+
+                            <div className='flex flex-col justify-center items-center'>
+                                <ul>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Java or Python or C Language</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>SQL</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Aptitude</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Resume Preparation</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Personal skill development</li>
+                                    <li><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Attire tips</li>
+                                </ul>
+                            </div>
+
                         </div>
+                    </section>
 
-                        <Divider orientation='vertical' sx={{width:'0.1vw', height:'30vh', border:'none', bgcolor:'gray'}}/>
 
-                        <div className='flex flex-col justify-center items-center ml-[6vw]'>
-                            <ul>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Java or Python or C Language</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>SQL</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Aptitude</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Resume Preparation</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Personal skill development</li>
-                                <li><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Attire tips</li>
-                            </ul>
+                    <section className='my-12'>
+                        <div className='bg-white drop-shadow-2xl rounded-xl py-6 px-16 flex flex-col md:flex-row justify-center md:justify-between items-center overflow-hidden'>
+                            
+                            <div className='flex flex-col justify-center items-center'>
+                                <h1 className='text-[#bc43df] text-lg md:text-2xl'>Paced Interview Preparation</h1>
+                                <button className='bg-transparent border border-green-300 rounded-full px-5 py-1 text-green-300 my-8'>Online Live class</button>
+                                <h4 className='mb-8 text-black'>3 Months <FiberManualRecordIcon className='p-2 text-gray-400'/> Weekdays <span className='text-gray-700'>(Evenings)</span> </h4>
+                                <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
+                            </div>
+
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 2vw'}} className='hidden lg:inline'/>
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 5vw'}} className='hidden md:inline lg:hidden'/>
+                            <Divider sx={{width: '100%', border:'1px solid rgba(153,153,153,1)', margin: '4vw 0'}} className='inline md:hidden'/>
+
+                            <div className='flex flex-col justify-center items-center'>
+                                <ul>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Java or Python</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>SQL</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Resume Preparation</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Personal skill development</li>
+                                    <li><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Attire tips</li>
+                                </ul>
+                            </div>
+
                         </div>
-                    </div>
+                    </section>
 
-                    <div className='bg-white drop-shadow-2xl rounded-xl mb-12 p-6 flex'>
-                        <div className='mr-[8.5vw] ml-[1vw]'>
-                            <h1 className='text-[#bc43df] text-2xl mb-8'>Paced Interview <br /> Preparation</h1>
-                            <button className='bg-transparent border mb-8 border-green-300 rounded-full px-5 py-1 text-green-300'>Online Live class</button>
-                            <h4 className='mb-8 text-black'>2.5 Months <FiberManualRecordIcon className='p-2 text-gray-400'/> Weekdays <span className='text-gray-700'>(Evenings)</span> </h4>
-                            <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
+
+                    <section>
+                        <div className='bg-white drop-shadow-2xl rounded-xl py-6 px-16 flex flex-col md:flex-row justify-center md:justify-between items-center overflow-hidden'>
+                            
+                            <div className='flex flex-col justify-center items-center'>
+                                <h1 className='text-[#bc43df] text-lg md:text-2xl'>Core Care Pack</h1>
+                                <button className='bg-transparent border border-green-300 rounded-full px-5 py-1 text-green-300 my-8'>Online Live class</button>
+                                <h4 className='mb-8 text-black'>3 Months <FiberManualRecordIcon className='p-2 text-gray-400'/> Weekdays <span className='text-gray-700'>(Evenings)</span> </h4>
+                                <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
+                            </div>
+
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 2vw'}} className='hidden lg:inline'/>
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 5vw'}} className='hidden md:inline lg:hidden'/>
+                            <Divider sx={{width: '100%', border:'1px solid rgba(153,153,153,1)', margin: '4vw 0'}} className='inline md:hidden'/>
+
+                            <div className='flex flex-col justify-center items-center'>
+                                <ul>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Electronic Devices</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Networks</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Analog and Digital Circuits</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Signals and Systems</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Sommunication and Control System</li>
+                                    <li><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Electromagnetics</li>
+                                </ul>
+                            </div>
+
                         </div>
+                    </section>
 
-                        <Divider orientation='vertical' sx={{width:'0.1vw', height:'30vh', border:'none', bgcolor:'gray'}}/>
 
-                        <div className='flex flex-col justify-center items-center ml-[6vw]'>
-                            <ul>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Java or Python</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>SQL</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Resume Preparation</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Personal skill development</li>
-                                <li><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Attire tips</li>
-                            </ul>
+                    <section className='my-12'>
+                        <div className='bg-white drop-shadow-2xl rounded-xl py-6 px-16 flex flex-col md:flex-row justify-center md:justify-between items-center overflow-hidden'>
+                            
+                            <div className='flex flex-col justify-center items-center'>
+                                <h1 className='text-[#bc43df] text-lg md:text-2xl'>Individual Courses</h1>
+                                <button className='bg-transparent border border-green-300 rounded-full px-5 py-1 text-green-300 my-8'>Online Live class</button>
+                                <h4 className='mb-8 text-black'>3 Months <FiberManualRecordIcon className='p-2 text-gray-400'/> Weekdays <span className='text-gray-700'>(Evenings)</span> </h4>
+                                <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
+                            </div>
+
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 2vw'}} className='hidden lg:inline'/>
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 5vw'}} className='hidden md:inline lg:hidden'/>
+                            <Divider sx={{width: '100%', border:'1px solid rgba(153,153,153,1)', margin: '4vw 0'}} className='inline md:hidden'/>
+
+                            <div className='flex flex-col justify-center items-center'>
+                                <ul>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Java</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Python</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>C Language</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>SQL</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Aptitude</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Electronics</li>
+                                    <li><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Communication Systems</li>
+                                </ul>
+                            </div>
+
                         </div>
-                    </div>
-
-                    <div className='bg-white drop-shadow-2xl rounded-xl mb-12 p-6 flex'>
-                        <div className='ml-[1vw] mr-[8.5vw]'>
-                            <h1 className='text-[#bc43df] text-2xl mb-8'>Core Crack <br /> Pack</h1>
-                            <button className='bg-transparent border mb-8 border-green-300 rounded-full px-5 py-1 text-green-300'>Online Live class</button>
-                            <h4 className='mb-8 text-black'>2.5 Months <FiberManualRecordIcon className='p-2 text-gray-400'/> Weekdays <span className='text-gray-700'>(Evenings)</span> </h4>
-                            <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
-                        </div>
-
-                        <Divider orientation='vertical' sx={{width:'0.1vw', height:'30vh', border:'none', bgcolor:'gray'}}/>
-
-                        <div className='flex flex-col justify-center items-center ml-[6vw]'>
-                            <ul>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Electronic devices</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Networks</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Analog and Digital circuits</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Signals and systems</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Communication and control system</li>
-                                <li><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Electromagnetics</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div className='bg-white drop-shadow-2xl rounded-xl mb-12 p-6 flex'>
-                        <div className='ml-[1vw] mr-[8.5vw]'>
-                            <h1 className='text-[#bc43df] text-2xl mb-8'>Individual Courses</h1>
-                            <button className='bg-transparent border mb-8 border-green-300 rounded-full px-5 py-1 text-green-300'>Online Live class</button>
-                            <h4 className='mb-8 text-black'>1.5 Months <FiberManualRecordIcon className='p-2 text-gray-400'/> Weekdays <span className='text-gray-700'>(Evenings)</span> </h4>
-                            <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
-                        </div>
-
-                        <Divider orientation='vertical' sx={{width:'0.1vw', height:'30vh', border:'none', bgcolor:'gray'}}/>
-
-                        <div className='flex flex-col justify-center items-center ml-[6vw]'>
-                            <ul>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Java</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Python</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>C Language</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>SQL</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Aptitude</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Electronics</li>
-                                <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Communication systems</li>
-                            </ul>
-                        </div>
-                    </div>
+                    </section>
 
                 </div>
+            </section>
 
-                <div className='mb-16 mt-48 bg-white drop-shadow-xl rounded-lg px-8 py-12 flex'>
-                    <div>
-                        <h1 className='text-[#bc43df] text-4xl'>Apply or enquire <br /> about courses</h1>
-                        <p className='text-md mt-[2vw]'>Feel free to reach out, we'd love to hear from you</p>
-                    </div>
-                    <div className='ml-[24vw]'>
-                        <form className='flex flex-col justify-center items-center'>
-                            <div className='relative my-4'>
-                                <input type="text" placeholder='Name' required className='border w-[20vw] border-gray-500 rounded-md p-1 shadow-xl shadow-white bg-[#fafafa]'/>
-                                <span className='text-red-600 absolute top-[18%] left-[18%] focus:hidden'>*</span>
-                            </div>
-                            <div className='relative my-4'>
-                                <input type="email" placeholder='Email' required className='border w-[20vw] border-gray-500 rounded-md p-1 shadow-xl shadow-white bg-[#fafafa]'/>
-                                <span className='text-red-600 absolute top-[18%] left-[16%] focus:hidden'>*</span>
-                            </div>
-                            <textarea placeholder="Message" cols="37" rows="5" className='border my-4 border-gray-500 rounded-md p-1 shadow-xl shadow-white bg-[#fafafa]'/><p></p>
-                            <button className='bg-[#bc43df] px-5 py-1 rounded-full text-white'>Send</button>
-                        </form>
-                    </div>
+
+            <section className='my-40 bg-white drop-shadow-2xl rounded-xl px-8 py-12 flex flex-col lg:flex-row overflow-hidden'>
+
+                <div>
+                    <h1 className='text-[#bc43df] text-4xl'>Apply or Enquire about Courses</h1>
+                    <p className='text-md mt-[2vw]'>Feel free to reach out, we'd love to hear from you</p>
                 </div>
 
-            </div>
+                <div className='text-center lg:ml-[25vw] mt-[10vw] lg:mt-0'>
+                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validate}>
+                        {(formik) => (
+                            <Form>
+                                <FormControl fullWidth>
+                                    <Field as={TextField} label={<span>Name<span className='text-red-700'>*</span></span>} name='name'/>
+                                    <ErrorMessage name='name'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>
+                                </FormControl>
+                                
+                                <FormControl fullWidth sx={{margin: '2vw 0'}}>
+                                    <Field as={TextField} label={<span>Mobile Number<span className='text-red-700'>*</span></span>} type='number' name='number'/>
+                                    <ErrorMessage name='number'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>
+                                </FormControl>
+                                
+                                <FormControl fullWidth>
+                                    <Field as={TextField} label='Message' name='message' multiline rows={4}/>
+                                </FormControl>
+
+                                <Button variant='contained' type='submit' sx={{borderRadius: '3rem', marginTop: '2vw',backgroundColor: '#be34e5'}}>Send</Button>
+                                {/* <TextField>
+                                <label htmlFor="file-upload"><input type="file" id="file-upload" style={{ display: 'none' }} onChange={handleFileChange}/>
+                                <Button variant="contained" component="label" htmlFor="file-upload">Upload File </Button>
+                                </label></TextField>
+                                <TextField><ArrowForwardIcon/></TextField>*/}
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
+
+            </section>
 
         </div>
 
