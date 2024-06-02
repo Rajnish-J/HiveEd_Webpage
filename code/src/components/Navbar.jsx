@@ -37,7 +37,7 @@ const Navbar = () => {
         const contactUsSection = document.getElementById('contact-us'); // Assuming your section has this ID
 
         if (contactUsSection) {
-          contactUsSection.scrollIntoView({top: '[50vw]', behavior: 'smooth' }); // Smooth scroll to the section
+          contactUsSection.scrollIntoView({behavior: 'smooth' }); // Smooth scroll to the section
         }
       });
     }
@@ -55,11 +55,9 @@ const Navbar = () => {
                     <button className={`mx-4 hidden md:inline lg:inline xl:inline 2xl:inline nav ${location.pathname === '/courses' ? 'active' : ''}`}><NavLink to='/courses/'>Courses</NavLink></button>
                     <button className={`mx-4 hidden md:inline lg:inline xl:inline 2xl:inline nav ${location.pathname === '/blog' ? 'active' : ''}`}><NavLink to='/blog/'>Blog</NavLink></button>
                     <button className={`mx-4 hidden md:inline lg:inline xl:inline 2xl:inline nav ${location.pathname === '/careers' ? 'active' : ''}`}><NavLink to='/careers/'>Careers</NavLink></button>
-                    <button className={`mx-4 hidden md:inline lg:inline xl:inline 2xl:inline nav contactUs ${location.pathname === '/careers' ? 'active' : ''} `} onClick={handleContactClick}>Contact Us</button>
+                    <button className={`mx-4 hidden md:inline lg:inline xl:inline 2xl:inline nav contactUs ${location.pathname === '/#contact-us' ? 'active' : ''} `} onClick={handleContactClick}>Contact Us</button>
                 </div>
                 
-                <p className='hidden md:inline lg:inline xl:inline 2xl:inline'></p>
-
                 <div className='inline md:invisible'>
                   <button onClick={handleMenuClick}><MenuIcon/></button>
                   <div className={`${isMenuOpen ? 'flex flex-col' : 'hidden'} px-4 py-2 rounded-lg absolute right-[10vw] justify-center bg-white text-black`}>

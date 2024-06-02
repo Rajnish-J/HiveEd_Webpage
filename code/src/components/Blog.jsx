@@ -21,7 +21,6 @@ const Blog = () => {
 
             </div>
 
-            <img src={HiveEd} alt="HiveEd" className='mb-8 w-[100%]'/>
 
         </section>
         

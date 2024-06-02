@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React} from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
@@ -6,9 +6,9 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import {Divider, Button, TextField, FormControl} from '@mui/material';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
+import emailjs from '@emailjs/browser';
 
 const Courses = () => {
-  const [formDataArray, setFormDataArray] = useState([]);
   
   const initialValues = {
         name: '',
@@ -17,19 +17,32 @@ const Courses = () => {
   };
     
   const onSubmit = (values, onSubmitProps) => {
-    const formData ={
-        name: values.name,
-        number: values.number,
-        message: values.message
+    const serviceId = 'service_zmob26a';
+    const templateId = 'template_pl7kcfc';
+    const publicKey = 'gKg9Aj_i-99vIbIxY';
+
+    const templateParams = {
+        from_name: values.name,
+        from_email: values.email,
+        to_name: 'HiveEd',
+        message: [values.number, values.message]
     }
+
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+    .then(() => {
+        alert(' Email sent successfully ')
+    })
+    .catch(() => {
+        alert('Email not sent. Try again later');
+    })
     
-    setFormDataArray([...formDataArray,formData]);
     onSubmitProps.resetForm();
   }
     
   const validate = Yup.object({
         name: Yup.string().required('* Name is required'),
         number: Yup.number().required('* Mobile Number is required')
+                .test( 'len', '* Mobile number must be 10 digits', (value) => typeof value === 'number' && value.toString().length === 10)
   });
 
   return (
@@ -49,7 +62,7 @@ const Courses = () => {
 
                 <h1 className='text-[#bc43df] text-3xl'>Courses we offer</h1>
  
-                <div className='mx-[2vw] md:mx-[9vw] mt-12 mb-20'>
+                <div className='md:mx-[9vw] mt-12 mb-20'>
 
                     <section>
                         <div className='bg-white drop-shadow-2xl rounded-xl py-6 px-16 flex flex-col md:flex-row justify-center md:justify-between items-center overflow-hidden'>
@@ -61,11 +74,11 @@ const Courses = () => {
                                 <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
                             </div>
 
-                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 2vw'}} className='hidden lg:inline'/>
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)'}} className='hidden lg:inline'/>
                             <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 5vw'}} className='hidden md:inline lg:hidden'/>
                             <Divider sx={{width: '100%', border:'1px solid rgba(153,153,153,1)', margin: '4vw 0'}} className='inline md:hidden'/>
 
-                            <div className='flex flex-col justify-center items-center'>
+                            <div className='flex flex-col justify-start items-start'>
                                 <ul>
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Java or Python or C Language</li>
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>SQL</li>
@@ -90,11 +103,11 @@ const Courses = () => {
                                 <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
                             </div>
 
-                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 2vw'}} className='hidden lg:inline'/>
-                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 5vw'}} className='hidden md:inline lg:hidden'/>
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)'}} className='hidden lg:inline'/>
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 2vw'}} className='hidden md:inline lg:hidden'/>
                             <Divider sx={{width: '100%', border:'1px solid rgba(153,153,153,1)', margin: '4vw 0'}} className='inline md:hidden'/>
 
-                            <div className='flex flex-col justify-center items-center'>
+                            <div className='flex flex-col justify-start items-start'>
                                 <ul>
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Java or Python</li>
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>SQL</li>
@@ -112,13 +125,13 @@ const Courses = () => {
                         <div className='bg-white drop-shadow-2xl rounded-xl py-6 px-16 flex flex-col md:flex-row justify-center md:justify-between items-center overflow-hidden'>
                             
                             <div className='flex flex-col justify-center items-center'>
-                                <h1 className='text-[#bc43df] text-lg md:text-2xl'>Core Care Pack</h1>
+                                <h1 className='text-[#bc43df] text-lg md:text-2xl'>Core Crack Pack</h1>
                                 <button className='bg-transparent border border-green-300 rounded-full px-5 py-1 text-green-300 my-8'>Online Live class</button>
                                 <h4 className='mb-8 text-black'>3 Months <FiberManualRecordIcon className='p-2 text-gray-400'/> Weekdays <span className='text-gray-700'>(Evenings)</span> </h4>
                                 <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
                             </div>
 
-                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 2vw'}} className='hidden lg:inline'/>
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)'}} className='hidden lg:inline'/>
                             <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 5vw'}} className='hidden md:inline lg:hidden'/>
                             <Divider sx={{width: '100%', border:'1px solid rgba(153,153,153,1)', margin: '4vw 0'}} className='inline md:hidden'/>
 
@@ -128,7 +141,7 @@ const Courses = () => {
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Networks</li>
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Analog and Digital Circuits</li>
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Signals and Systems</li>
-                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Sommunication and Control System</li>
+                                    <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Communication and <br /> Control System</li>
                                     <li><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Electromagnetics</li>
                                 </ul>
                             </div>
@@ -147,11 +160,11 @@ const Courses = () => {
                                 <button className='bg-[#bc43df] text-white rounded-full px-4 py-1'>Enquire now</button>
                             </div>
 
-                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 2vw'}} className='hidden lg:inline'/>
+                            <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)'}} className='hidden lg:inline'/>
                             <Divider orientation='vertical' sx={{height:'27vh', border:'1px solid rgba(153,153,153,1)', margin: '0 5vw'}} className='hidden md:inline lg:hidden'/>
                             <Divider sx={{width: '100%', border:'1px solid rgba(153,153,153,1)', margin: '4vw 0'}} className='inline md:hidden'/>
 
-                            <div className='flex flex-col justify-center items-center'>
+                            <div className='flex flex-col justify-start items-start'>
                                 <ul>
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Java</li>
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Python</li>
@@ -159,7 +172,6 @@ const Courses = () => {
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>SQL</li>
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Aptitude</li>
                                     <li className='mb-2'><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Electronics</li>
-                                    <li><CheckCircleOutlineIcon className='text-green-300 mr-2'/>Communication Systems</li>
                                 </ul>
                             </div>
 

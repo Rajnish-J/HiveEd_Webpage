@@ -3,8 +3,15 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import About_Us from '../images/Aboutus/aboutus.png';
 import Background_Image from '../images/HomePage/background_aboutus.png';
-import Avatar from '@mui/material/Avatar';
 import Rajnish from '../images/Aboutus/Rajnish.png';
+import Murugesan from '../images/Aboutus/Murugesan.jpg';
+import Raghul from '../images/Aboutus/Raghul.jpg';
+import Sanjay from '../images/Aboutus/Sanjay.jpg';
+import Sabari from '../images/Aboutus/Sabari.jpg';
+import Ragavi from '../images/Aboutus/Ragavi.jpg';
+import Rithika from '../images/Aboutus/Rithika.jpg';
+import Nandhakumar from '../images/Aboutus/Nandhakumar.jpg';
+import Ponharieesh from '../images/Aboutus/Ponharieesh.jpg';
 
 const AboutUs = () => {
   return (
@@ -29,7 +36,7 @@ const AboutUs = () => {
             </div>
 
             <div className='bg-[#fbf4fd] rounded-lg py-4 px-6'>
-              <h1 className='text-[#bc43df] font-bold text-xl'>Practival Learning Approach</h1>
+              <h1 className='text-[#bc43df] font-bold text-xl'>Practical Learning Approach</h1>
               <p className='text-justify mt-4'>We advocate for learning through hands-on experience. Our emphasis on projects, real-world applications, and interactive sessions ensures that students not only understand theoretical concepts but also acquire practical skills directly applicable in the industry.</p>
             </div>
 
@@ -43,36 +50,37 @@ const AboutUs = () => {
           <section className='flex flex-col justify-center items-center'>
 
             <div className='flex flex-col justify-center items-center'>
-              <Avatar src={Rajnish} alt='Rajnish' sx={{width: '100px', height: '100px'}}/>
+              <div className='overflow-hidden aspect-square rounded-full'><img src={Rajnish} alt="Rajnish" /></div>
+              {/* <Avatar src={Rajnish} alt='Rajnish' sx={{width: '100px', height: '100px'}}/> */}
               <p>Mr. Rajnish J</p>
               <p className='text-center'>Chief Executive Officer, Founder</p>
             </div>
 
-            <p className='md:mx-[20vw] mx-[4vw] my-6 text-lg text-center'><span className='text-3xl'>"</span> HiveEd aims for global recognition and brand certification. All courses are designed to meet international standards and provide learners with credentials that hold value worldwide. <span className='text-3xl'>"</span></p>
+            <p className='md:mx-[20vw] mx-[4vw] my-6 text-lg text-center'>"HiveEd aims for global recognition and brand certification. All courses are designed to meet international standards and provide learners with credentials that hold value worldwide."</p>
 
             <div className='grid grid-cols-1 md:grid-cols-3 my-12 gap-y-6 md:gap-y-0'>
 
               <div className='flex flex-col justify-center items-center'>
-                <Avatar src='' alt='Rajnish' sx={{width: '100px', height: '100px'}}/>
+                <div className='overflow-hidden aspect-square rounded-full w-40 h-40'><img src={Murugesan} alt="Murugesan" /></div>
                 <p>Mr. Murugesan</p>
                 <p className='text-center'>Chief Research & Business Officer, Co-Founder</p>
               </div>
 
               <div className='flex flex-col justify-center items-center'>
-                <Avatar src='' alt='Rajnish' sx={{width: '100px', height: '100px'}}/>
+               <div className='overflow-hidden aspect-square rounded-full w-40 h-40'><img src={Raghul} alt="Raghul" /></div>
                 <p>Mr. Raghul</p>
                 <p className='text-center'>Chief Texhnology Officer, Co-Founder</p>
               </div>
 
               <div className='flex flex-col justify-center items-center'>
-                <Avatar src='' alt='Rajnish' sx={{width: '100px', height: '100px'}}/>
+                <div className='overflow-hidden aspect-square rounded-full w-40 h-40'><img src={Sanjay} alt="Sanjay" /></div>
                 <p>Mr. Sanjay</p>
                 <p className='text-center'>Chief Curriculum Officer, Co-Founder</p>
               </div>
 
             </div>
 
-            <p className='md:mx-[20vw] mx-[4vw] mb-6 text-lg text-center'><span className='text-3xl'>"</span> Hive.ed encourages a culture of continuous learning and adaptability. Learners are encouraged to explore a diverse range of courses to stay competitive in the ever-evolving world of education and work. <span className='text-3xl'>"</span></p>
+            <p className='md:mx-[20vw] mx-[4vw] mb-6 text-lg text-center'>"Hive.ed encourages a culture of continuous learning and adaptability. Learners are encouraged to explore a diverse range of courses to stay competitive in the ever-evolving world of education and work."</p>
 
           </section>
 
@@ -83,34 +91,34 @@ const AboutUs = () => {
             <div className='grid grid-cols-1 md:grid-cols-3 gap-y-6 md:gap-y-0'>
 
               <div className='flex flex-col justify-center items-center'>
-                <Avatar src='' alt='Rajnish' sx={{width: '100px', height: '100px'}}/>
+                <div className='overflow-hidden aspect-square rounded-full w-40 h-40 object-cover'><img src={Rithika} alt="Rithika" /></div>
                 <p>Rithika</p>
                 <p className='text-center'>C Admin & Trainer, Aptitude Trainer</p>
               </div>
 
               <div className='flex flex-col justify-center items-center'>
-                <Avatar src='' alt='Rajnish' sx={{width: '100px', height: '100px'}}/>
+                <div className='overflow-hidden aspect-square rounded-full w-40 h-40 object-cover'><img src={Ragavi} alt="Ragavi" /></div>
                 <p>Ragavi</p>
                 <p className='text-center'>SQL Admin & Trainer, Aptitude Trainer</p>
               </div>
 
               <div className='flex flex-col justify-center items-center'>
-                <Avatar src='' alt='Rajnish' sx={{width: '100px', height: '100px'}}/>
+                <div className='overflow-hidden aspect-square rounded-full w-40 h-40 object-cover'><img src={Nandhakumar} alt="Nandhakumar" /></div>
                 <p>Nandhakumar</p>
                 <p className='text-center'>SQL Admin & Trainer, Python Trainer, Website Developer</p>
               </div>
             </div>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 my-12 gap-y-6 md:gap-y-0'>
+            <div className='grid grid-cols-1 md:grid-cols-2 my-12 gap-y-6 md:gap-y-0 object-cover'>
 
              <div className='flex flex-col justify-center items-center'>
-                <Avatar src='' alt='Rajnish' sx={{width: '100px', height: '100px'}}/>
+                <div className='overflow-hidden aspect-square rounded-full w-40 h-40'><img src={Sabari} alt="Sabari" /></div>
                 <p>Sabari</p>
                 <p>Java Trainer</p>
               </div>
 
               <div className='flex flex-col justify-center items-center'>
-                <Avatar src='' alt='Rajnish' sx={{width: '100px', height: '100px'}}/>
+                <div className='overflow-hidden aspect-square rounded-full w-40 h-40 object-cover'><img src={Ponharieesh} alt="Ponharieesh" /></div>
                 <p>Ponharieesh</p>
                 <p>Python Trainer</p>
               </div>

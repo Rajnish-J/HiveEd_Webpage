@@ -5,45 +5,62 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {Divider, TextField, Button, FormControl} from '@mui/material';
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
+import emailjs from '@emailjs/browser';
 
 const Careers = () => {
-  const [formDataArray, setFormDataArray] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
+//   const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    // Handle the selected file (e.g., upload to server)
+//   const handleFileChange = (event) => {
+//     const file = event.target.files[0];
 
-    if(!file.type.match('application/pdf')){
-        return;
-    }
-    setSelectedFile(file);
-  };
+//     if(!file.type.match('application/pdf')){
+//         alert('Please upload a PDF file only');
+//         return;
+//     }
+
+//     if(file.size > 50*1024){
+//         alert('File size should be less than 50kb');
+//         return;
+//     }
+
+//     setSelectedFile(file);
+//   };
 
   const initialValues = {
     name: '',
     email: '',
     number: '',
     cv: '',
-    resume: ''
   };
 
   const onSubmit = (values, onSubmitProps) => {
-    const formData = {
-        name: values.name,
-        email: values.email,
-        number: values.number,
-        cv: values.cv,
-        resume: values.reusme
+    const serviceId = 'service_zmob26a';
+    const templateId = 'template_pl7kcfc';
+    const publicKey = 'gKg9Aj_i-99vIbIxY';
+
+    const templateParams = {
+        from_name: values.name,
+        from_email: values.email,
+        to_name: 'HiveEd',
+        message:[values.number, values.cv]
     }
-    setFormDataArray([...formDataArray, formData]);
+
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+    .then(() => {
+        alert(' Email sent successfully ');
+    })
+    .catch(() => {
+        alert('Email not sent. Try again later');
+    });
+
     onSubmitProps.resetForm();
   };
 
   const validate = Yup.object({
     name: Yup.string().required('* Name is required'),
     email: Yup.string().email('Invalid Email').required('* Email is required'),
-    number: Yup.number().required('* Contact Number is required'),
+    number: Yup.number().required('* Contact Number is required')
+            .test( 'len', '* Mobile number must be 10 digits', (value) => typeof value === 'number' && value.toString().length === 10),
     cv: Yup.string().required('* Cover Letter is required'),
   });
 
@@ -86,40 +103,59 @@ const Careers = () => {
 
             </section>
 
-
             <section className='my-20'>
-
-                <h1 className='text-[#bc43df] font-bold text-xl mb-8'>Join us here</h1>
-                <p>Join Our Team of Inspiring Educators: <br /> Empower Minds, Shape Futures!</p>
 
                 <div className='flex flex-col justify-start mt-8 bg-white rounded-lg drop-shadow-2xl p-8 lg:mx-40 overflow-hidden'>
 
                     <h1 className='text-[#bc43df] mb-4 font-bold text-2xl'>Become a HiveEd Instructor</h1>
                     <p className='mb-8'>Ignite your passion with a supportive community of instructors online.</p>
-                    
+
                     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validate}>
                         {(formik) => (
                             <Form className='text-center'>
+
                                 <FormControl fullWidth>
                                     <Field as={TextField} label={<span>Full Name<span className='text-red-700'>*</span></span>} name='name'/>
-                                    {formik.touched.name && formik.errors.name && <ErrorMessage name='name'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>}
+                                    <ErrorMessage name='name'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>
                                 </FormControl>
-                                
+
                                 <FormControl fullWidth sx={{margin: '2vw 0'}}>
                                     <Field as={TextField} label={<span>Email Id<span className='text-red-700'>*</span></span>} name='email'/>
                                     <ErrorMessage name='email'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>
                                 </FormControl>
-                                
+
                                 <FormControl fullWidth>
                                     <Field as={TextField} label={<span>Contact Number<span className='text-red-700'>*</span></span>} type='number' name='number'/>
                                     <ErrorMessage name='number'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>
                                 </FormControl>
-                                
+
                                 <FormControl fullWidth sx={{margin: '2vw 0'}}>
                                     <Field as={TextField} label={<span>Cover Letter<span className='text-red-700'>*</span></span>} name='cv'/>
                                     <ErrorMessage name='cv'>{ (errorMessage) => <div className='text-red-500'>{errorMessage}</div> }</ErrorMessage>
                                 </FormControl>
 
+                                {/* <FormControl fullWidth sx={{textAlign: 'left', margin: '0.5 0 1vw'}}>
+                                    <div className='inline md:flex items-center' name='resume'>
+                                        <label htmlFor="file-upload">
+                                            <input type="file" id="file-upload" style={{ display: 'none' }} onChange={handleFileChange} name='resume'/>
+                                            <Button variant="contained" component="label" htmlFor="file-upload">Upload Resume</Button>
+                                        </label>
+                                    </div>
+                                    <div className='text-xl text-black ml-6'>{selectedFile && (<p>{selectedFile.name}</p>)}</div>
+                                </FormControl> */}
+
+                                <Button variant='contained' type='submit' sx={{backgroundColor: '#be34e5', borderRadius: '3rem', padding: '0.5rem 4rem'}}>Send</Button>
+
+                            </Form>
+                        )}
+                    </Formik>
+
+                </div>
+
+            </section>
+
+
+            {/*                                 
                                 <FormControl fullWidth sx={{textAlign: 'left', margin: '0.5 0 1vw'}}>
                                     <div className='inline md:flex items-center' name='resume'>
                                         <label htmlFor="file-upload">
@@ -137,7 +173,7 @@ const Careers = () => {
                     
                 </div>
 
-            </section>
+            </section> */}
 
         </div>
 

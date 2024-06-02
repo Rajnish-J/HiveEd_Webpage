@@ -1,4 +1,4 @@
-import {React, useState} from 'react';
+import {React} from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import '../index.css';
@@ -28,7 +28,6 @@ import * as Yup from 'yup';
 import emailjs from '@emailjs/browser';
 
 const HomePage = () => {
-  const [formDataArray, setFormDataArray] = useState([]);
 
   const initialValues = {
     name: '',
@@ -37,11 +36,6 @@ const HomePage = () => {
   };
 
   const onSubmit = (values, onSubmitProps) => {
-    const formData ={
-        name: values.name,
-        email: values.email,
-        message: values.message
-    }
     const serviceId = 'service_zmob26a';
     const templateId = 'template_pl7kcfc';
     const publicKey = 'gKg9Aj_i-99vIbIxY';
@@ -54,14 +48,13 @@ const HomePage = () => {
     }
 
     emailjs.send(serviceId, templateId, templateParams, publicKey)
-    .then((response) => {
-        console.log('Email sent successfully', response);
+    .then(() => {
+        alert('Email sent Successfully');
     })
-    .catch((error) => {
-        console.error('Error sending email', error);
+    .catch(() => {
+        alert('Email not sent. Try again later');
     })
 
-    setFormDataArray([...formDataArray,formData]);
     onSubmitProps.resetForm();
   }
 
@@ -70,6 +63,28 @@ const HomePage = () => {
     email: Yup.string().email('Invalid email').required('* Email is required'),
     message: Yup.string().required('* Message is required')
   });
+
+//   const validateForm = values => {
+//     let errors ={}
+
+//     if(!values.name.trim()){
+//         errors.name = '* Name is required';
+//     };
+
+//     if(!values.email.trim()){
+//         errors.email = '* Email is required';
+//     }else if(!1){
+//         errors.email = 'Invalid Email';
+//     };
+
+//     if(!values.message.trim()){
+//         errors.message = '* Message is required';
+//     };
+
+//     console.log(values);
+
+//     return errors;
+//   }
 
 
   return (
@@ -125,10 +140,10 @@ const HomePage = () => {
 
                 <div className='flex flex-col justify-center items-center bg-white drop-shadow-2xl rounded-lg py-12 px-4 overflow-hidden'>
                     <h1 className='text-6xl font-bold mb-8'>100%</h1>
-                    <div className='grid grid-cols-3 gap-x-6'>
-                        <button className='cursor-pointer border border-gray-400 rounded-full px-2 py-1'>Active Interaction</button>
-                        <button className='cursor-pointer border border-gray-400 rounded-full px-2 py-1'>Placement Guidance</button>
-                        <button className='cursor-pointer border border-gray-400 rounded-full px-2 py-1'>Career Guidance</button>
+                    <div className='grid grid-cols-3 gap-x-6 overflow-hidden'>
+                        <button className='cursor-pointer border border-gray-400 rounded-full px-2 py-1 overflow-hidden'>Active Interaction</button>
+                        <button className='cursor-pointer border border-gray-400 rounded-full px-2 py-1 overflow-hidden'>Placement Guidance</button>
+                        <button className='cursor-pointer border border-gray-400 rounded-full px-2 py-1 overflow-hidden'>Career Guidance</button>
                     </div>
                 </div>
 
@@ -272,9 +287,7 @@ const HomePage = () => {
                                 </FormControl>
 
                                 <Button variant='contained' type='submit' sx={{borderRadius: '3rem', marginTop: '2vw',backgroundColor: '#be34e5'}}>Send</Button>
-                                {/* <TextField>
-                                <</TextField>
-                                <TextField><ArrowForwardIcon/></TextField>*/}
+
                             </Form>
                         )}
                     </Formik>
