@@ -5,20 +5,20 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 const CoursesList = [
   { id: 1, text: "Explore HiveEd" },
   { id: 2, text: "Pricing" },
-  { id: 3, text: "Career Guidance" },
+  // { id: 3, text: "Career Guidance" },
 ];
 
 const FeaturesList = [
-  { id: 1, text: "Course Analytics" },
-  { id: 2, text: "Platinum Certification Standard" },
-  { id: 3, text: "Self Analysis Test" },
+  // { id: 1, text: "Course Analytics" },
+  // { id: 2, text: "Platinum Certification Standard" },
+  // { id: 3, text: "Self Analysis Test" },
   { id: 4, text: "Commuity Engagement" },
   { id: 5, text: "Subscription" },
 ];
 
 const ResourcesList = [
   { id: 1, text: "Blog" },
-  { id: 2, text: "Case Studies" },
+  // { id: 2, text: "Case Studies" },
   { id: 3, text: "Help" },
 ];
 

@@ -1,4 +1,4 @@
-import Marquee from "react-fast-marquee";
+// import Marquee from "react-fast-marquee";
 
 const imageURL = "/assets/Aboutus";
 
@@ -12,7 +12,7 @@ const AboutUs = () => {
           className="hidden h-48 w-48 sm:inline md:h-auto md:w-auto"
         />
 
-        <p className="text-justify text-sm md:text-base lg:text-lg xl:text-xl">
+        <p className="text-justify text-sm md:text-base lg:text-lg">
           At HiveEd, our commitment to fostering knowledge and igniting
           curiosity drives our efforts. We offer a diverse range of courses
           including placements and domain-based learning. Our platinum
@@ -75,7 +75,7 @@ const AboutUs = () => {
           <img
             src={`${imageURL}/end-quotes.png`}
             alt="End Quotes"
-            className="xs:right-[-5vw] xs:bottom-[-2vw] absolute bottom-0 right-0 sm:bottom-[-1vw] md:right-[-3vw]"
+            className="absolute bottom-0 right-0 xs:bottom-[-2vw] xs:right-[-5vw] sm:bottom-[-1vw] md:right-[-3vw]"
           />
         </div>
 
@@ -107,7 +107,7 @@ const AboutUs = () => {
           <img
             src={`${imageURL}/end-quotes.png`}
             alt="End Quotes"
-            className="xs:right-[-5vw] xs:bottom-[-2vw] absolute bottom-0 right-0 sm:bottom-[-1vw] md:right-[-3vw]"
+            className="absolute bottom-0 right-0 xs:bottom-[-2vw] xs:right-[-5vw] sm:bottom-[-1vw] md:right-[-3vw]"
           />
         </div>
       </section>
@@ -124,7 +124,7 @@ const AboutUs = () => {
           </TeamMembers>
 
           <TeamMembers path="Nandhakumar.png" nowh="nowh" name="Nandhakumar">
-            {/* {SQL Admin & Trainer,*/}Python Trainer,Website Developer 
+            {/* {SQL Admin & Trainer,*/}Python Trainer,Website Developer
           </TeamMembers>
           <TeamMembers path="Sabari.jpg" name="Sabari">
             Java Trainer
@@ -175,7 +175,7 @@ const LearningApproach = ({ title, children }) => {
       <h1 className="mb-4 text-base text-[#bc43df] md:text-lg lg:text-xl 2xl:text-2xl">
         {title}
       </h1>
-      <p className="text-justify text-sm lg:text-base 2xl:text-xl">
+      <p className="text-justify text-sm lg:text-base 2xl:text-lg">
         {children}
       </p>
     </div>

@@ -26,7 +26,7 @@ const Navbar = () => {
 
         {/* Navbar links for medium and large screens */}
         <div className="hidden md:flex">
-          <NavbarLinks className="flex items-center gap-8 lg:text-lg xl:text-2xl xl:gap-16" />
+          <NavbarLinks className="flex items-center gap-8 lg:text-lg" />
         </div>
 
         {/* Hamburger Menu for small screens */}
