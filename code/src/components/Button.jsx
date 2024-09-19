@@ -6,6 +6,7 @@ const Button = ({ children, to, type, onClick }) => {
   const styles = {
     primary: base + " bg-[#be34e5] text-white",
     secondary: base + " text-green-400 border-green-400 border",
+    gray: base + " border-gray-400 border",
   };
 
   if (to)
