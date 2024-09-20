@@ -154,59 +154,44 @@ const HomePage = () => {
 
         <div className="grid grid-cols-1 gap-8 xs:mx-[8vw] sm:mx-[6vw] sm:grid-cols-2 lg:mx-[12vw] xl:gap-x-16 xl:gap-y-0">
           {/* First Box (left) */}
-          <div className="relative cursor-pointer overflow-hidden rounded-xl bg-slate-50 px-12 py-8 drop-shadow-2xl sm:col-start-1 sm:row-start-1">
-            <img
-              src={`${imageURL}/shapeA.png`}
-              alt="Shape A Interview"
-              className="absolute top-[-9vw] z-[-2]"
-            />
-            <img
-              src={`${imageURL}/shapeB.png`}
-              alt="Shape B Interview"
-              className="absolute bottom-[-7vw] left-[-5vw] z-[-2]"
-            />
-            <img
-              src={`${imageURL}/shapeC.png`}
-              alt="Shape C Interview"
-              className="absolute bottom-[-7vw] right-[-5vw] z-[-2]"
-            />
-            <h2 className="z-10 mb-24 text-lg font-medium md:mb-32">
-              Complete interview <br /> prep pack
-            </h2>
-            <p className="inline">Explore</p>
-            <ArrowForwardIcon className="float-right" />
-          </div>
+          <CoursesLists
+            FirstContent="Complete interview"
+            SecondContent="prep pack"
+            divClass="sm:col-start-1 sm:row-start-1"
+            Image1Class="top-[-30%] "
+            Image2Class="bottom-[-20%] left-[-10%] "
+            Image3Class="bottom-[-20%] right-[-10%] "
+          />
 
           {/* Second Box (right) */}
-          <div className="relative cursor-pointer overflow-hidden rounded-xl bg-slate-50 px-12 py-8 drop-shadow-2xl sm:col-start-2 sm:row-start-2">
-            <img src={`${imageURL}/ShapeA_.png`} alt="" />
-            <h2 className="mb-24 text-lg font-medium md:mb-32">
-              Paced interview <br />
-              prep pack
-            </h2>
-            <p className="inline">Explore</p>
-            <ArrowForwardIcon className="float-right" />
-          </div>
+          <CoursesLists
+            FirstContent="Paced interview"
+            SecondContent="prep pack"
+            divClass="sm:col-start-2 sm:row-start-2"
+            Image1Class="top-[-25%] left-[-10%] "
+            Image2Class="bottom-[-45%] rotate-[-65deg] "
+            Image3Class=" right-[-30%] "
+          />
 
           {/* Third Box (left) */}
-          <div className="relative cursor-pointer overflow-hidden rounded-xl bg-slate-50 px-12 py-8 drop-shadow-2xl sm:col-start-1 sm:row-start-3">
-            <img src={`${imageURL}/ShapeA_.png`} alt="" />
-            <h2 className="mb-24 text-lg font-medium md:mb-32">
-              Core crack <br /> pack
-            </h2>
-            <p className="inline">Explore</p>
-            <ArrowForwardIcon className="float-right" />
-          </div>
+          <CoursesLists
+            FirstContent="Core crack"
+            SecondContent="pack"
+            divClass="sm:col-start-1 sm:row-start-3"
+            Image1Class="bottom-[-25%] right-[-2%]  rotate-180"
+            Image2Class="top-[-25%] right-[-15%]"
+            Image3Class="rotate-[-30deg] top-[-15%] left-[-10%]"
+          />
 
           {/* Fourth Box (right) */}
-          <div className="relative cursor-pointer overflow-hidden rounded-xl bg-slate-50 px-12 py-8 drop-shadow-2xl sm:col-start-2 sm:row-start-4">
-            <img src={`${imageURL}/ShapeA_.png`} alt="" />
-            <h2 className="mb-24 text-lg font-medium md:mb-32">
-              Individual <br /> courses
-            </h2>
-            <p className="inline">Explore</p>
-            <ArrowForwardIcon className="float-right" />
-          </div>
+          <CoursesLists
+            FirstContent="Individual"
+            SecondContent="Courses"
+            divClass="sm:col-start-2 sm:row-start-4"
+            Image1Class="right-[8%] rotate-[50deg] top-[-27%]"
+            Image2Class="left-[-20%] top-[30%] rotate-[30deg]"
+            Image3Class="bottom-[-27%] right-[12%] rotate-[40deg]"
+          />
         </div>
       </section>
 
@@ -276,6 +261,45 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+const CoursesLists = ({
+  FirstContent,
+  SecondContent,
+  divClass,
+  Image1Class,
+  Image2Class,
+  Image3Class,
+}) => {
+  return (
+    <div
+      className={`group relative cursor-pointer overflow-hidden rounded-xl bg-slate-50 px-12 py-8 drop-shadow-2xl ${divClass}`}
+    >
+      <img
+        src={`${imageURL}/shapeA.png`}
+        alt={`Shape A ${FirstContent}`}
+        className={`group absolute z-[-2] h-[50%] w-[50%] transition-all duration-500 group-hover:left-0 group-hover:top-0 group-hover:h-full group-hover:w-full lg:h-[50%] lg:w-[40%] ${Image1Class}`}
+      />
+      <img
+        src={`${imageURL}/shapeB.png`}
+        alt={`Shape B ${FirstContent}`}
+        className={`group absolute z-[-2] h-[50%] w-[50%] transition-all duration-500 group-hover:bottom-0 group-hover:left-0 group-hover:h-full group-hover:w-full lg:h-[50%] lg:w-[40%] ${Image2Class}`}
+      />
+      <img
+        src={`${imageURL}/shapeC.png`}
+        alt={`Shape C ${FirstContent}`}
+        className={`group absolute z-[-2] h-[50%] w-[50%] transition-all duration-500 group-hover:bottom-0 group-hover:right-0 group-hover:h-full group-hover:w-full lg:h-[50%] lg:w-[40%] ${Image3Class}`}
+      />
+      <h2 className="z-10 mb-24 text-lg font-medium md:mb-32">
+        {FirstContent} <br /> {SecondContent}
+      </h2>
+      <p className="inline">Explore</p>
+      <ArrowForwardIcon className="float-right" />
+
+      {/* Optional Background Color Overlay */}
+      <div className="absolute inset-0 z-[-1] bg-[#eadaca] opacity-0 transition-opacity duration-500 group-hover:opacity-80" />
+    </div>
+  );
+};
 
 const LearningApproach = ({
   TitleFirst,
