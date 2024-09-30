@@ -9,7 +9,7 @@ const AppLayout = () => {
       <Navbar />
 
       {/* Content section below the navbar */}
-      <main className="pt-12 md:pt-[16vh] pb-8 md:pb-[12vh] mx-[4vw] md:mx-[9vw]">
+      <main className="md:pt-[16vh] pb-8 md:pb-[12vh] mx-[4vw] md:mx-[9vw]">
         <Outlet />
       </main>
 
