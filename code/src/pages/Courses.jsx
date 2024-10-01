@@ -1,44 +1,29 @@
-import Button from "../components/Button";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { Formik } from "formik";
 
-const CompleteIntPack = [
-  { id: 1, text: "Java or Python or C Language" },
-  { id: 2, text: "SQL" },
-  { id: 3, text: "Aptitude" },
-  { id: 4, text: "Resume preparation" },
-  { id: 5, text: "Personal skill development" },
-  { id: 6, text: "Attire tips" },
-];
+import Button from "../components/GeneralComponents/Button";
+import { HeaderTwo, Paragraph } from "../components/GeneralComponents/Styles";
+import SimpleDetailForm, {
+  InputField,
+} from "../components/GeneralComponents/SimpleDetailForm";
+import * as Yup from "yup";
+import {
+  CompleteIntPack,
+  PacedIntPack,
+  CoreCrackPack,
+  IndividualPack,
+} from "../constants/CoursesData";
+import SendEmail from "../api/SendEmail";
 
-const PacedIntPack = [
-  { id: 1, text: "Java or Python" },
-  { id: 2, text: "SQL" },
-  { id: 3, text: "Resume preparation" },
-  { id: 4, text: "Personal skill development" },
-  { id: 5, text: "Attire tips" },
-];
+// Validation schema
+const validationSchema = Yup.object({
+  name: Yup.string().required("Full Name is required"),
+  number: Yup.number().required("Mobile Number is required"),
+  message: Yup.string().required("Message is required"),
+});
 
-const CoreCrackPack = [
-  { id: 1, text: "Electronic devices" },
-  { id: 2, text: "Networks" },
-  { id: 3, text: "Analog and Digital circuits" },
-  { id: 4, text: "Signals and systems" },
-  { id: 5, text: "Digital Communication" },
-  { id: 6, text: "Control systems" },
-  // { id: 5, text: "Communication and control systems" },
-  { id: 7, text: "Electromagnetics" },
-];
-
-const IndividualPack = [
-  { id: 1, text: "Java" },
-  { id: 2, text: "Python" },
-  { id: 3, text: "C Language" },
-  { id: 4, text: "SQL" },
-  { id: 5, text: "Aptitude" },
-  { id: 6, text: "Electronics" },
-  { id: 7, text: "Communication systems" },
-];
+const templateID = "";
 
 const Courses = () => {
   return (
@@ -47,7 +32,7 @@ const Courses = () => {
         <h1 className="mb-6 font-semibold text-[#bc43df] xs:text-lg md:text-xl xl:text-2xl">
           Unlock Your Potential with Out <br /> Comprehensive Course Offerings
         </h1>
-        <p className="text-justify text-sm xs:text-base md:text-lg">
+        <Paragraph className="text-justify">
           Welcome to HiveED! Here, we offer a diverse range of courses designed
           to empower individuals like you to unlock their full potential and
           thrive in today's dynamic world. Our courses cover a wide spectrum of
@@ -58,15 +43,13 @@ const Courses = () => {
           is your gateway to personal and professional growth. Explore our
           courses and embark on a journey of continuous learning and skill
           mastery.
-        </p>
+        </Paragraph>
       </section>
 
       <hr className="my-12 border-gray-400 sm:my-16" />
 
       <section>
-        <h1 className="mb-12 font-semibold text-[#bc43df] xs:text-lg md:text-xl xl:text-3xl">
-          Courses we offer
-        </h1>
+        <HeaderTwo titleFirst="Courses we offer" className="mb-12" />
 
         <div className="mx-4 sm:mx-8 lg:mx-24 xl:mx-[14vw]">
           <CoursesList
@@ -94,6 +77,48 @@ const Courses = () => {
           />
         </div>
       </section>
+
+      <hr className="my-12 border-gray-400 sm:my-16" />
+
+      <Formik
+        initialValues={{ name: "", number: "", message: "" }}
+        validationSchema={validationSchema}
+        onSubmit={(values, { resetForm, setSubmitting }) => {
+          const templateParams = {
+            to_name: values.name,
+            number: values.number,
+            message: values.message,
+          };
+          SendEmail(
+            resetForm,
+            setSubmitting,
+            templateID,
+            templateParams,
+            "Message sent successfully!",
+          );
+        }}
+      >
+        {() => (
+          <SimpleDetailForm
+            className="grid grid-cols-1 gap-y-6 p-6 md:grid-cols-[auto,auto] md:gap-x-6 md:gap-y-0 md:p-10"
+            title1="Apply or enquire"
+            title2="about courses"
+            description1="Feel free to reach out, we'd love to hear from you"
+          >
+            <InputField type="text" labelName="Full Name" name="name" />
+            <InputField
+              type="number"
+              max={10}
+              labelName="Mobile Number"
+              name="number"
+            />
+            <InputField labelName="Description" name="description" rows={5} />
+            <div>
+              <Button type="primary">Send</Button>
+            </div>
+          </SimpleDetailForm>
+        )}
+      </Formik>
     </>
   );
 };
@@ -103,15 +128,21 @@ const CoursesList = ({ title, duration, list }) => {
     <div className="mb-16 grid place-content-center overflow-hidden rounded-xl bg-white px-2 py-6 drop-shadow-2xl sm:grid-cols-[auto,auto,auto] md:px-6 md:py-8">
       <div className="text-center md:text-start">
         {/* First Container */}
-        <h1 className="mb-4 text-lg font-medium text-[#bc43df] sm:mb-6 lg:text-xl xl:mb-8">
-          {title}
-        </h1>
+        <HeaderTwo className="mb-4 sm:mb-6 xl:mb-8" titleFirst={title} />
         <Button type="secondary">Online Live Class</Button>
         <h4 className="my-4 sm:my-6 lg:text-lg xl:my-8">
           {duration} Months <FiberManualRecordIcon className="p-2" /> Weekdays
           <span className="ml-1 text-sm lg:text-base">(Evening)</span>
         </h4>
-        <Button type="primary">Enquire now</Button>
+        <a
+          href="https://forms.gle/rX8eaYsrALQrdGFi7"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Button type="primary" hover="hover">
+            Register now
+          </Button>
+        </a>
       </div>
 
       {/* Center Divider */}

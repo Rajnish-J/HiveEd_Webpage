@@ -1,7 +1,9 @@
-import Button from "../components/Button";
+import Button from "../components/GeneralComponents/Button";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CircleIcon from "@mui/icons-material/Circle";
 import { useEffect, useRef, useState } from "react";
+import SimpleDetailForm, { InputField } from "../components/GeneralComponents/SimpleDetailForm";
+import { Formik } from "formik";
 
 const imageURL = "/assets/HomePage";
 
@@ -256,6 +258,37 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {/* <section className="my-40 overflow-hidden rounded-xl bg-white px-8 py-12 drop-shadow-2xl">
+        <Formik
+          initialValues={{ name: "", email: "", description: "" }}
+          onSubmit={(values) => console.log(values)}
+        >
+          {() => (
+            <SimpleDetailForm
+              title1="Let's"
+              title2="Connect"
+              description1="Questions,comments or requests?"
+              description2="Feel free to reach out,we'd love to hear from you"
+            >
+              <InputField type="text" name="name" labelName="Full Name" />
+              <InputField type="email" name="email" labelName="Email" />
+              <InputField
+                type="number"
+                max={10}
+                labelName="Number Input"
+                name="name"
+              />
+              <InputField
+                labelName="Description"
+                name="description"
+                rows={4} // Textarea for the description
+              />
+              <button type="submit">Submit</button>
+            </SimpleDetailForm>
+          )}
+        </Formik>
+      </section> */}
     </>
   );
 };

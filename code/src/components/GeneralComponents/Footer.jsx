@@ -27,7 +27,7 @@ const CompanyList = [
 
 const Footer = () => {
   return (
-    <div className="overflow-hidden border-t-2 border-[#a93fc4] bg-[#f3dbf9] p-6 text-xs xs:text-sm lg:px-20 lg:py-8 lg:text-base xl:py-12 xl:text-lg">
+    <div className="overflow-hidden border-t-2 border-[#a93fc4] bg-[#f3dbf9] p-3 text-xs xs:text-sm lg:px-16 lg:py-6 lg:text-base xl:py-8 xl:text-lg">
       <div className="grid grid-cols-2 gap-x-6 gap-y-4 xs:grid-cols-3 sm:grid-cols-4">
         {/* Logo and Social Links */}
         <div className="flex flex-col gap-12 sm:justify-between">
