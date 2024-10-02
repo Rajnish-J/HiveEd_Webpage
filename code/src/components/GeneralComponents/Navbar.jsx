@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { CgMenuMotion } from "react-icons/cg";
@@ -108,20 +108,58 @@ const Navbar = () => {
 };
 
 const NavbarLinks = ({ className, toggleMenu }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleContactUsClick = (e) => {
+    e.preventDefault();
+
+    if (location.pathname === "/") {
+      // If already on the homepage,trigger scroll manually
+      const headerHeight = window.innerHeight * 0.03 + 80;
+      window.scrollTo({
+        top: document.getElementById("form-section").offsetTop - headerHeight,
+        behavior: "smooth",
+      });
+    } else {
+      navigate("/", { state: { scrollToForm: true } }); // Navigate to homepage with scrollToForm set to true
+    }
+    toggleMenu(); // Close the menu
+  };
+
+  // useEffect(()=>{
+  //   if(location.state?.scrollToForm){
+  //     // Scroll to form when arriving at homepage
+
+  //   }
+  // })
+
   return (
     <div className={className}>
-      {routes.map((route) => (
-        <NavLink
-          key={route.to}
-          to={route.to}
-          className={({ isActive }) =>
-            `${NavListStyle} hover:after:w-[${route.mobile_border_w}em] ${isActive ? "after:w-[4em] after:opacity-100 md:after:w-full" : ""}`
-          }
-          onClick={() => toggleMenu()}
-        >
-          {route.label}
-        </NavLink>
-      ))}
+      {routes.map((route) =>
+        route.label === "Contact us" ? (
+          <NavLink
+            key={route.to}
+            onClick={(e) => handleContactUsClick(e)}
+            className={({ isActive }) =>
+              `${NavListStyle} hover:after:w-[${route.mobile_border_w}em] ${isActive ? "after:w-[4em] after:opacity-100 md:after:w-full" : ""}`
+            }
+          >
+            {route.label}
+          </NavLink>
+        ) : (
+          <NavLink
+            key={route.to}
+            to={route.to}
+            className={({ isActive }) =>
+              `${NavListStyle} hover:after:w-[${route.mobile_border_w}em] ${isActive ? "after:w-[4em] after:opacity-100 md:after:w-full" : ""}`
+            }
+            onClick={() => toggleMenu()}
+          >
+            {route.label}
+          </NavLink>
+        ),
+      )}
     </div>
   );
 };

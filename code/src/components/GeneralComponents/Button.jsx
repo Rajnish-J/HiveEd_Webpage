@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 const Button = ({ children, to, type, onClick, hover }) => {
   const base = "rounded-full px-4 py-2 md:px-6 cursor-pointer";
+  const buttonHover = "transition-transform hover:scale-125";
 
   const styles = {
     primary: base + " bg-[#be34e5] text-white",
@@ -9,20 +10,20 @@ const Button = ({ children, to, type, onClick, hover }) => {
     gray: base + " border-gray-400 border",
   };
 
+  if (to)
+    return (
+      <Link className={`inline-block ${styles[type]} ${buttonHover}`} to={to}>
+        {children}
+      </Link>
+    );
+
   if (hover)
     return (
       <button
-        className={`${styles[type]} transition-transform hover:scale-125`}
+        className={`${styles[type]} ${buttonHover}`}
       >
         {children}
       </button>
-    );
-
-  if (to)
-    return (
-      <Link className={styles[type]} to={to}>
-        {children}
-      </Link>
     );
 
   if (onClick)
@@ -32,7 +33,11 @@ const Button = ({ children, to, type, onClick, hover }) => {
       </button>
     );
 
-  return <button type="submit" className={styles[type]}>{children}</button>;
+  return (
+    <button type="submit" className={styles[type]}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;

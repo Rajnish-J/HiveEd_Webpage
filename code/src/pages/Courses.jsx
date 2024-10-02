@@ -1,12 +1,9 @@
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { Formik } from "formik";
+import { ToastContainer } from "react-toastify";
 
 import Button from "../components/GeneralComponents/Button";
 import { HeaderTwo, Paragraph } from "../components/GeneralComponents/Styles";
-import SimpleDetailForm, {
-  InputField,
-} from "../components/GeneralComponents/SimpleDetailForm";
 import * as Yup from "yup";
 import {
   CompleteIntPack,
@@ -14,18 +11,58 @@ import {
   CoreCrackPack,
   IndividualPack,
 } from "../constants/CoursesData";
-import SendEmail from "../api/SendEmail";
+import GeneralFormField from "../components/GeneralComponents/GeneralFormField";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 // Validation schema
 const validationSchema = Yup.object({
   name: Yup.string().required("Full Name is required"),
-  number: Yup.number().required("Mobile Number is required"),
+  number: Yup.string()
+    .matches(/^\d{10}$/, "Mobile Number must be exactly 10 digits")
+    .required("Mobile Number is required"),
   message: Yup.string().required("Message is required"),
 });
 
 const templateID = "";
 
 const Courses = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const scrollToTarget = () => {
+      // Check if there's a hash in the URL
+      if (location.hash) {
+        // Get the target element based on the hash
+        const targetElement = document.getElementById(
+          location.hash.substring(1),
+        );
+
+        // Calculate the header height: 3vh + 60px for padding
+        const headerHeight = window.innerHeight * 0.03 + 80;
+
+        // Ensure the target element exists
+        if (targetElement) {
+          // Get the top position of the target element relative to the document
+          const yPosition =
+            targetElement.getBoundingClientRect().top +
+            window.scrollY -
+            headerHeight;
+
+          // Scroll to the calculated position
+          window.scrollTo({ top: yPosition, behavior: "smooth" });
+        } else {
+          console.warn(
+            `Element with ID "${location.hash.substring(1)}" not found.`,
+          );
+        }
+      }
+    };
+
+    // Run the scrollToTarget function
+    scrollToTarget();
+  }, [location]);
+
   return (
     <>
       <section>
@@ -56,76 +93,55 @@ const Courses = () => {
             title="Complete Interview Preparation"
             duration={3}
             list={CompleteIntPack}
+            id="complete-interview"
           />
 
           <CoursesList
             title="Paced Interview Preparation"
             duration={2.5}
             list={PacedIntPack}
+            id="paced-interview"
           />
 
           <CoursesList
             title="Core Crack Pack"
             duration={2.5}
             list={CoreCrackPack}
+            id="core-crack"
           />
 
           <CoursesList
             title="Individual Courses"
             duration={1.5}
             list={IndividualPack}
+            id="individual-courses"
           />
         </div>
       </section>
 
       <hr className="my-12 border-gray-400 sm:my-16" />
 
-      <Formik
-        initialValues={{ name: "", number: "", message: "" }}
+      <GeneralFormField
+        type="number"
         validationSchema={validationSchema}
-        onSubmit={(values, { resetForm, setSubmitting }) => {
-          const templateParams = {
-            to_name: values.name,
-            number: values.number,
-            message: values.message,
-          };
-          SendEmail(
-            resetForm,
-            setSubmitting,
-            templateID,
-            templateParams,
-            "Message sent successfully!",
-          );
-        }}
-      >
-        {() => (
-          <SimpleDetailForm
-            className="grid grid-cols-1 gap-y-6 p-6 md:grid-cols-[auto,auto] md:gap-x-6 md:gap-y-0 md:p-10"
-            title1="Apply or enquire"
-            title2="about courses"
-            description1="Feel free to reach out, we'd love to hear from you"
-          >
-            <InputField type="text" labelName="Full Name" name="name" />
-            <InputField
-              type="number"
-              max={10}
-              labelName="Mobile Number"
-              name="number"
-            />
-            <InputField labelName="Description" name="description" rows={5} />
-            <div>
-              <Button type="primary">Send</Button>
-            </div>
-          </SimpleDetailForm>
-        )}
-      </Formik>
+        labelName="Mobile Number"
+        title1="Apply or enquire"
+        title2="about courses"
+        description1="Feel free to reach out, we'd love to hear from you"
+        description2=""
+      />
+
+      <ToastContainer />
     </>
   );
 };
 
-const CoursesList = ({ title, duration, list }) => {
+const CoursesList = ({ title, duration, list, id }) => {
   return (
-    <div className="mb-16 grid place-content-center overflow-hidden rounded-xl bg-white px-2 py-6 drop-shadow-2xl sm:grid-cols-[auto,auto,auto] md:px-6 md:py-8">
+    <div
+      id={id}
+      className="mb-16 grid place-content-center overflow-hidden rounded-xl bg-white px-2 py-6 drop-shadow-2xl sm:grid-cols-[auto,auto,auto] md:px-6 md:py-8"
+    >
       <div className="text-center md:text-start">
         {/* First Container */}
         <HeaderTwo className="mb-4 sm:mb-6 xl:mb-8" titleFirst={title} />

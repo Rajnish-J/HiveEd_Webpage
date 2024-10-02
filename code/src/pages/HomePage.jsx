@@ -1,17 +1,38 @@
-import Button from "../components/GeneralComponents/Button";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import CircleIcon from "@mui/icons-material/Circle";
-import { useEffect, useRef, useState } from "react";
-import SimpleDetailForm, { InputField } from "../components/GeneralComponents/SimpleDetailForm";
-import { Formik } from "formik";
+import { useEffect, useState } from "react";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import * as Yup from "yup";
+import { ToastContainer } from "react-toastify";
 
-const imageURL = "/assets/HomePage";
+import Button from "../components/GeneralComponents/Button";
+import {
+  HeaderTwo,
+  Image,
+  Paragraph,
+} from "../components/GeneralComponents/Styles";
+import {
+  LearningDetails,
+  CoursesLists,
+  TeachingSection,
+} from "../components/PageComponents/HomeSubComponents";
+import GeneralFormField from "../components/GeneralComponents/GeneralFormField";
+import { useLocation } from "react-router-dom";
+
+const validationSchema = Yup.object({
+  name: Yup.string().required("Full Name is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  message: Yup.string().required("Message is required"),
+});
 
 const HomePage = () => {
+  const location = useLocation();
+  const scrollToForm = location.state?.scrollToForm || false;
+
   const [lineStart, setLineStart] = useState(0);
   const [lineEnd, setLineEnd] = useState(0);
   const currentWidth = window.innerWidth;
-  let extraSubtract = 0;
+  let extraSubtract = currentWidth >= 880 ? 70 : currentWidth >= 670 ? 80 : 95;
 
   const updateLineHeight = () => {
     const firstElement = document.querySelector(".first-element");
@@ -22,21 +43,10 @@ const HomePage = () => {
       const lastRect = lastElement.getBoundingClientRect();
 
       // Recalculate line start (top of the first element) and line end (center of last CircleIcon)
-      const newLineStart = window.scrollY + firstRect.top;
-      const newLineEnd = window.scrollY + lastRect.top + lastRect.height / 2;
-
-      setLineStart(newLineStart);
-      setLineEnd(newLineEnd);
+      setLineStart(window.scrollY + firstRect.top);
+      setLineEnd(window.scrollY + lastRect.top + lastRect.height / 2);
     }
   };
-
-  if (currentWidth >= 640 && currentWidth <= 670) {
-    extraSubtract = 95;
-  } else if (currentWidth >= 670 && currentWidth <= 880) {
-    extraSubtract = 90;
-  } else if (currentWidth >= 880) {
-    extraSubtract = 60;
-  }
 
   useEffect(() => {
     // Initial calculation of the line height
@@ -53,119 +63,100 @@ const HomePage = () => {
 
   return (
     <>
-      <section className="grid grid-cols-[auto,auto] place-content-center place-items-center gap-8 sm:grid-cols-[auto,auto,auto] lg:gap-16">
-        <div>
-          <h1 className="text-3xl font-medium">
+      <section className="grid grid-cols-2 place-items-center gap-4 sm:grid-cols-[auto,auto,auto] sm:gap-x-6 lg:gap-x-16">
+        <div className="col-span-2 sm:col-span-1">
+          <h1 className="text-xl font-medium xs:text-3xl">
             Acquire, Learn, <br /> Expertise
           </h1>
-          <p className="my-6 text-justify lg:text-lg">
+          <Paragraph className="my-2 text-justify xs:my-5">
             Stay informed, inspired, and empowered as you expand your knowledge,
             acquire new skills, and master expertise through our dynamic skill
             development platform.
-          </p>
-          <Button type="primary">Explore More</Button>
+          </Paragraph>
+          <Button type="primary" hover="hover" to="/courses">
+            Explore More
+          </Button>
         </div>
 
-        <img src={`${imageURL}/hiveed_symbol.png`} alt="HiveEd symbol" />
+        <div className="w-20 xs:w-28 sm:w-36">
+          <Image
+            src="HomePage/hiveed_symbol.png"
+            alt="HiveEd symbol"
+            className="h-full w-full object-contain"
+          />
+        </div>
 
-        <img
-          src={`${imageURL}/Student.png`}
-          alt="Student"
-          className="hidden sm:inline"
-        />
+        <div className="w-20 xs:w-36 sm:w-44 md:w-full">
+          <Image
+            src="HomePage/Student.png"
+            alt="Student"
+            className="h-full w-full object-contain"
+          />
+        </div>
       </section>
 
-      <section className="relative my-24 flex h-[100%] w-[100%] flex-col items-center justify-center overflow-hidden">
-        <img
-          src="/assets/Aboutus/background_aboutus.png"
-          alt="Background"
-          className="absolute top-0 h-[100%] w-[100%]"
+      <section className="relative my-16 overflow-hidden">
+        <Image
+          src="Aboutus/background_aboutus.png"
+          alt="background"
+          className="absolute top-0 z-[-1] h-[100%] w-[100%]"
         />
-        <h2 className="mb-8 text-3xl font-bold text-[#bc43df]">About us</h2>
-        <p className="mx-[2vw] text-center text-lg md:mx-[10vw]">
+
+        <HeaderTwo titleFirst="About us" className="mb-8 text-center" />
+        <Paragraph className="mx-[2vw] text-center md:mx-[10vw]">
           Welcome to HiveED, where education meets innovation in tech. With out
           passionate trainers and practical approach, we've committed to
           nurturing your skills and igniting you creativity. Join us as we
           redefine IT and electronics education, one student at a time.
           Together, let's pave the way for a brighter future in the tech
           industry.
-        </p>
+        </Paragraph>
       </section>
 
-      <section className="mb-24">
-        <h2 className="mb-8 text-center text-3xl font-bold text-[#bc43df]">
-          Why HiveEd
-        </h2>
+      <section>
+        <HeaderTwo titleFirst="Why HiveED" className="mb-8 text-center" />
 
         <div className="grid gap-6">
-          <div className="grid gap-6 sm:grid-cols-3 sm:gap-4 lg:gap-8">
-            <div className="overflow-hidden rounded-xl bg-slate-50 px-4 py-4 drop-shadow-2xl sm:px-2 lg:px-4">
-              <Button type="gray">Mentorship</Button>
-              <p className="my-4 text-gray-600">
-                Empowering tech talent through personalized mentorship.
-              </p>
-              <img
-                src={`${imageURL}/mentorship.png`}
-                alt="Mentorship"
-                className="float-right"
-              />
-            </div>
-
-            <div className="overflow-hidden rounded-xl bg-slate-50 px-4 py-4 drop-shadow-2xl sm:px-2 lg:px-4">
-              <Button type="gray">Materials</Button>
-              <p className="my-4 text-gray-600">
-                Unlock your potential with engaging, industry-relevant
-                materials.
-              </p>
-              <img
-                src={`${imageURL}/materials.png`}
-                alt="Mentorship"
-                className="float-right"
-              />
-            </div>
-
-            <div className="overflow-hidden rounded-xl bg-slate-50 px-4 py-4 drop-shadow-2xl sm:px-2 lg:px-4">
-              <Button type="gray">Self Analysis test</Button>
-              <p className="my-4 text-gray-600">
-                Discover your strengths and chart your path with our free
-                self-analysis test.
-              </p>
-              <img
-                src={`${imageURL}/self_analysis_test.png`}
-                alt="Mentorship"
-                className="float-right"
-              />
-            </div>
+          <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-4 sm:gap-y-0">
+            <LearningDetails
+              title="Mentorship"
+              content="Empowering tech talent through personalized mentorship."
+              src="mentorship.png"
+            />
+            <LearningDetails
+              title="Materials"
+              content="Unlock your potential with engaging, industry-relevant materials."
+              src="materials.png"
+            />
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-8 overflow-hidden rounded-xl bg-slate-50 py-4 drop-shadow-2xl xs:px-3 sm:py-16">
-            <h1 className="text-5xl font-bold lg:mb-8 lg:text-6xl">100%</h1>
-            <div className="flex flex-col gap-4 xs:flex-row xs:text-xs sm:text-lg">
+          <div className="flex flex-col items-center justify-between gap-8 overflow-hidden rounded-xl bg-slate-50 py-4 drop-shadow-xl xs:py-3 sm:py-16">
+            <h2 className="text-5xl font-bold lg:mb-8 lg:text-7xl">100%</h2>
+            <div className="flex flex-col items-center gap-6 xs:flex-row">
               <Button type="gray">Active Interaction</Button>
+              <div className="hidden xs:inline">
+                <FiberManualRecordIcon className="p-1.5 text-gray-500" />
+              </div>
               <Button type="gray">Placement Guidance</Button>
-              <Button type="gray">Career Guidance</Button>
             </div>
           </div>
         </div>
       </section>
 
       <section className="my-24">
-        <h2 className="mb-8 text-3xl font-bold text-[#bc43df]">
-          Couses we offer
-        </h2>
+        <HeaderTwo titleFirst="Courses we offer" className="mb-8 text-center" />
 
-        <div className="grid grid-cols-1 gap-8 xs:mx-[8vw] sm:mx-[6vw] sm:grid-cols-2 lg:mx-[12vw] xl:gap-x-16 xl:gap-y-0">
-          {/* First Box (left) */}
+        <div className="gird-cols-1 grid gap-8 xs:mx-[8vw] sm:mx-[6vw] sm:grid-cols-2 lg:mx-[12vw] xl:gap-x-16 xl:gap-y-0">
           <CoursesLists
             FirstContent="Complete interview"
             SecondContent="prep pack"
             divClass="sm:col-start-1 sm:row-start-1"
-            Image1Class="top-[-30%] "
-            Image2Class="bottom-[-20%] left-[-10%] "
-            Image3Class="bottom-[-20%] right-[-10%] "
+            Image1Class="top-[-20%]"
+            Image2Class="bottom-[-20%] left-[-10%]"
+            Image3Class="bottom-[-20%] right-[-10%]"
+            targetId="complete-interview"
           />
 
-          {/* Second Box (right) */}
           <CoursesLists
             FirstContent="Paced interview"
             SecondContent="prep pack"
@@ -173,9 +164,9 @@ const HomePage = () => {
             Image1Class="top-[-25%] left-[-10%] "
             Image2Class="bottom-[-45%] rotate-[-65deg] "
             Image3Class=" right-[-30%] "
+            targetId="paced-interview"
           />
 
-          {/* Third Box (left) */}
           <CoursesLists
             FirstContent="Core crack"
             SecondContent="pack"
@@ -183,9 +174,9 @@ const HomePage = () => {
             Image1Class="bottom-[-25%] right-[-2%]  rotate-180"
             Image2Class="top-[-25%] right-[-15%]"
             Image3Class="rotate-[-30deg] top-[-15%] left-[-10%]"
+            targetId="core-crack"
           />
 
-          {/* Fourth Box (right) */}
           <CoursesLists
             FirstContent="Individual"
             SecondContent="Courses"
@@ -193,205 +184,39 @@ const HomePage = () => {
             Image1Class="right-[8%] rotate-[50deg] top-[-27%]"
             Image2Class="left-[-20%] top-[30%] rotate-[30deg]"
             Image3Class="bottom-[-27%] right-[12%] rotate-[40deg]"
+            targetId="individual-courses"
           />
         </div>
       </section>
 
-      <section className="relative">
-        <h2 className="mb-8 text-center text-3xl font-bold text-[#bc43df]">
-          Our Teaching
-        </h2>
+      <section>
+        <HeaderTwo className="mb-8 text-center" titleFirst="Our Teaching" />
 
-        <div>
-          <div className="relative hidden items-center justify-center sm:flex">
-            <hr
-              className="absolute top-0 w-[0.1rem] -translate-x-1/2 transform bg-gray-600"
-              style={{ height: lineEnd - lineStart - extraSubtract }}
-            />
-          </div>
-
-          <div className="grid gap-6 sm:mx-[12vw] sm:grid-cols-2 sm:gap-x-16 sm:gap-y-20">
-            <LearningApproach
-              TitleFirst="Interactive Class"
-              ContentFirst="Engaging sessions that encourage active participation,"
-              ContentSecond="discussions and collaborative learning."
-              className="first-element sm:col-start-1 sm:row-start-1"
-              RightSide={true}
-              isFirst={true}
-              setLineStart={setLineStart}
-            />
-
-            <LearningApproach
-              TitleFirst="Enriched content &"
-              TitleSecond="Notes"
-              ContentFirst="Access to meticulously curated materials, including notes,"
-              ContentSecond="resources and refrences to enhance learning."
-              className="sm:col-start-2 sm:row-start-2"
-              RightSide={false}
-            />
-
-            <LearningApproach
-              TitleFirst="Real time example"
-              ContentFirst="Application-oriented learning through relevant and timely"
-              ContentSecond="instances from various industries or contexts."
-              className="sm:col-start-1 sm:row-start-3"
-              RightSide={true}
-            />
-
-            <LearningApproach
-              TitleFirst="Mentor guidance"
-              ContentFirst="Dedicated mentors providing personalized support,"
-              ContentSecond="guidance, and assistance throughout the learning journey."
-              className="flex gap-4 sm:col-start-2 sm:row-start-4"
-              RightSide={false}
-            />
-
-            <LearningApproach
-              TitleFirst="Assessment & Feedback"
-              ContentFirst="Ongoing evaluation of progress and performance,coupled,"
-              ContentSecond="with constructive feedback for improvement."
-              className="last-element flex gap-4 sm:col-start-1 sm:row-start-5"
-              RightSide={true}
-              isLast={true}
-              setLineEnd={setLineEnd}
-            />
-          </div>
-        </div>
+        <TeachingSection
+          lineStart={lineStart}
+          lineEnd={lineEnd}
+          extraSubtract={extraSubtract}
+          setLineStart={setLineStart}
+          setLineEnd={setLineEnd}
+        />
       </section>
 
-      {/* <section className="my-40 overflow-hidden rounded-xl bg-white px-8 py-12 drop-shadow-2xl">
-        <Formik
-          initialValues={{ name: "", email: "", description: "" }}
-          onSubmit={(values) => console.log(values)}
-        >
-          {() => (
-            <SimpleDetailForm
-              title1="Let's"
-              title2="Connect"
-              description1="Questions,comments or requests?"
-              description2="Feel free to reach out,we'd love to hear from you"
-            >
-              <InputField type="text" name="name" labelName="Full Name" />
-              <InputField type="email" name="email" labelName="Email" />
-              <InputField
-                type="number"
-                max={10}
-                labelName="Number Input"
-                name="name"
-              />
-              <InputField
-                labelName="Description"
-                name="description"
-                rows={4} // Textarea for the description
-              />
-              <button type="submit">Submit</button>
-            </SimpleDetailForm>
-          )}
-        </Formik>
-      </section> */}
+      <section className="my-20" id="form-section">
+        <GeneralFormField
+          type="email"
+          validationSchema={validationSchema}
+          labelName="Email"
+          title1="Let's"
+          title2="Connect"
+          description1="Questions,comments or requests?"
+          description2="Feel free to reach out, we'd love to hear from you"
+          scrollToForm={scrollToForm}
+        />
+      </section>
+
+      <ToastContainer />
     </>
   );
 };
 
 export default HomePage;
-
-const CoursesLists = ({
-  FirstContent,
-  SecondContent,
-  divClass,
-  Image1Class,
-  Image2Class,
-  Image3Class,
-}) => {
-  return (
-    <div
-      className={`group relative cursor-pointer overflow-hidden rounded-xl bg-slate-50 px-12 py-8 drop-shadow-2xl ${divClass}`}
-    >
-      <img
-        src={`${imageURL}/shapeA.png`}
-        alt={`Shape A ${FirstContent}`}
-        className={`group absolute z-[-2] h-[50%] w-[50%] transition-all duration-500 group-hover:left-0 group-hover:top-0 group-hover:h-full group-hover:w-full lg:h-[50%] lg:w-[40%] ${Image1Class}`}
-      />
-      <img
-        src={`${imageURL}/shapeB.png`}
-        alt={`Shape B ${FirstContent}`}
-        className={`group absolute z-[-2] h-[50%] w-[50%] transition-all duration-500 group-hover:bottom-0 group-hover:left-0 group-hover:h-full group-hover:w-full lg:h-[50%] lg:w-[40%] ${Image2Class}`}
-      />
-      <img
-        src={`${imageURL}/shapeC.png`}
-        alt={`Shape C ${FirstContent}`}
-        className={`group absolute z-[-2] h-[50%] w-[50%] transition-all duration-500 group-hover:bottom-0 group-hover:right-0 group-hover:h-full group-hover:w-full lg:h-[50%] lg:w-[40%] ${Image3Class}`}
-      />
-      <h2 className="z-10 mb-24 text-lg font-medium md:mb-32">
-        {FirstContent} <br /> {SecondContent}
-      </h2>
-      <p className="inline">Explore</p>
-      <ArrowForwardIcon className="float-right" />
-
-      {/* Optional Background Color Overlay */}
-      <div className="absolute inset-0 z-[-1] bg-[#eadaca] opacity-0 transition-opacity duration-500 group-hover:opacity-80" />
-    </div>
-  );
-};
-
-const LearningApproach = ({
-  TitleFirst,
-  TitleSecond,
-  ContentFirst,
-  ContentSecond,
-  RightSide,
-  className,
-  isLast,
-  isFirst,
-  setLineStart,
-  setLineEnd,
-}) => {
-  const elementRef = useRef(null);
-
-  useEffect(() => {
-    if (isFirst && elementRef.current) {
-      // Set the starting point of the line to the top of the first element
-      const rect = elementRef.current.getBoundingClientRect();
-      setLineStart(window.scrollY + rect.top); // ScrollY accounts for document height
-    }
-
-    if (isLast && elementRef.current) {
-      // Set the ending point of the line to the center of the CircleIcon in the last element
-      const rect = elementRef.current.getBoundingClientRect();
-      const circleCenter = window.scrollY + rect.top + rect.height / 2;
-      setLineEnd(circleCenter); // Set the height until the center of CircleIcon}
-    }
-  }, [isLast, setLineStart, isFirst, setLineEnd]);
-
-  return (
-    <div ref={elementRef} className={`${className} flex gap-4`}>
-      <div
-        className={`${RightSide ? "inline sm:hidden" : "relative sm:absolute sm:left-[50%] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:transform"}`}
-      >
-        <CircleIcon className="text-[#eac0f5]" />
-      </div>
-
-      <div
-        className={` ${RightSide ? "sm:text-right" : ""} relative flex flex-col gap-4 sm:w-full`}
-      >
-        {TitleSecond ? (
-          <h3 className="text-lg font-medium">
-            {TitleFirst} <br className="hidden sm:inline" /> {TitleSecond}
-          </h3>
-        ) : (
-          <h3 className="text-lg font-medium">{TitleFirst}</h3>
-        )}
-
-        <p>
-          {ContentFirst} <br className="hidden sm:inline" /> {ContentSecond}
-        </p>
-      </div>
-
-      {RightSide && (
-        <div className="hidden sm:absolute sm:left-[50%] sm:inline sm:translate-x-[-50%] sm:translate-y-[-50%] sm:transform">
-          <CircleIcon className="text-[#eac0f5]" />
-        </div>
-      )}
-    </div>
-  );
-};
