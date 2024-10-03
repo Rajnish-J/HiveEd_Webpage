@@ -7,3 +7,5 @@ Functions:
 * add course details
 * insta page
 * aptitude problems
+
+status : completed

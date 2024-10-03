@@ -1,58 +1,62 @@
 import { RiArrowDropDownLine } from "react-icons/ri";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { RiArrowDropUpLine } from "react-icons/ri";
-import { ErrorMessage, Formik } from "formik";
 import { ToastContainer } from "react-toastify";
-import * as Yup from "yup";
-import { FormControl } from "@mui/material";
 
-import SendEmail from "../api/SendEmail";
 import { HeaderTwo, Paragraph } from "../components/GeneralComponents/Styles";
 import { useState } from "react";
-import SimpleDetailForm, {
-  InputField,
-} from "../components/GeneralComponents/SimpleDetailForm";
+import Button from "../components/GeneralComponents/Button";
 
-const initialValues = {
-  name: "",
-  email: "",
-  number: "",
-  resume: "",
-  cv: "",
-};
+// const initialValues = {
+//   name: "",
+//   email: "",
+//   number: "",
+//   resume: "",
+//   cv: "",
+// };
 
-const validationSchema = Yup.object({
-  name: Yup.string().required("Full Name is required"),
-  email: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  number: Yup.string()
-    .matches(/^\d{10}$/, "Mobile Number must be exactly 10 digits")
-    .required("Mobile Number is required"),
-  resume: Yup.mixed()
-    .required("Resume is required")
-    .test(
-      "fileType",
-      "Only PDF,PNG,JPG and JPEG formats are accepted",
-      (value) => {
-        return (
-          value &&
-          ["application/pdf", "image/png", "image/jpeg", "image/jpg"].includes(
-            value.type,
-          )
-        );
-      },
-    )
-    .test("fileSize", "File too large,max size is 50kb", (value) => {
-      return value && value.size <= 51200;
-    }),
-  cv: Yup.string().required("Cover Letter is required"),
-});
+// const validationSchema = Yup.object({
+//   name: Yup.string().required("Full Name is required"),
+//   email: Yup.string()
+//     .email("Invalid email address")
+//     .required("Email is required"),
+//   number: Yup.string()
+//     .matches(/^\d{10}$/, "Mobile Number must be exactly 10 digits")
+//     .required("Mobile Number is required"),
+//   resume: Yup.mixed()
+//     .required("Resume is required")
+//     .test(
+//       "fileType",
+//       "Only PDF,PNG,JPG and JPEG formats are accepted",
+//       (value) => {
+//         return (
+//           value &&
+//           ["application/pdf", "image/png", "image/jpeg", "image/jpg"].includes(
+//             value.type,
+//           )
+//         );
+//       },
+//     )
+//     .test("fileSize", "File too large,max size is 50kb", (value) => {
+//       return value && value.size <= 51200;
+//     }),
+//   cv: Yup.string().required("Cover Letter is required"),
+// });
 
-const templateID = "";
+// const templateID = "template_pl7kcfc";
 
 const Careers = () => {
-  const [fileName, setFileName] = useState("");
+  // const [fileName, setFileName] = useState("");
+  // const fileInputRef = useRef(null);
+
+  // const getBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => resolve(reader.result);
+  //     reader.onerror = (error) => reject(error);
+  //   });
+  // };
 
   return (
     <>
@@ -107,27 +111,58 @@ const Careers = () => {
             online.
           </Paragraph>
 
-          <Formik
+          <div className="flex flex-col items-center gap-y-3">
+            <div className="flex items-center gap-x-4">
+              <p>Click here to send your resume</p>
+              <Button type="primary">
+                <a href="mailto:thehive.ed@gmail.com">Send</a>
+              </Button>
+            </div>
+
+            <p className="">or</p>
+
+            <div>
+              <p>Send your resume to mail : thehive.ed@gmail.com</p>
+            </div>
+          </div>
+          {/* <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values, { resetForm, setSubmitting }) => {
-              const templateParams = {
-                to_name: values.name,
-                email: values.email,
-                number: values.number,
-                resume: values.resume,
-                cv: values.cover,
-              };
-              SendEmail(
-                resetForm,
-                setSubmitting,
-                templateID,
-                templateParams,
-                "Email sent successfully!",
-              );
+            onSubmit={async (values, { resetForm, setSubmitting }) => {
+              try {
+                const resumeBase64 = await getBase64(values.resume);
+
+                // Get the original filename and extension
+                const fileName = values.resume.name;
+
+                const templateParams = {
+                  to_name: values.name,
+                  to_email: values.email,
+                  number: values.number,
+                  resume: resumeBase64,
+                  cv: values.cv,
+                  from_name: "HiveEd",
+                  file_name: fileName,
+                };
+                SendEmail(
+                  resetForm,
+                  setSubmitting,
+                  templateID,
+                  templateParams,
+                  "Email sent successfully!",
+                );
+
+                // Reset input after submitting
+                if (fileInputRef.current) {
+                  fileInputRef.current.value = "";
+                }
+                setFileName("");
+              } catch (error) {
+                //Error
+              }
             }}
           >
-            {({setFieldValue}) => (
+            {({ setFieldValue, isSubmitting }) => (
               <SimpleDetailForm className="bg-transparent">
                 <InputField type="text" labelName="Full Name" name="name" />
                 <InputField type="email" labelName="Email" name="email" />
@@ -146,6 +181,7 @@ const Careers = () => {
                       <input
                         type="file"
                         id="file-upload"
+                        ref={fileInputRef}
                         style={{ display: "none" }}
                         name="resume"
                         accept=".pdf,.png,.jpg,.jpeg"
@@ -156,6 +192,7 @@ const Careers = () => {
                         }}
                       />
                       <button
+                        disabled={isSubmitting}
                         className="rounded-lg bg-[#cf99de] p-2 text-xs xs:text-base"
                         type="button"
                         htmlFor="file-upload"
@@ -183,15 +220,16 @@ const Careers = () => {
                 <InputField labelName="Cover letter" name="cv" rows={5} />
                 <div>
                   <button
+                    disabled={isSubmitting}
                     type="submit"
                     className="rounded-lg bg-[#be34e5] px-10 py-3 text-white"
                   >
-                    Submit
+                    {isSubmitting ? "Submitting..." : "Submit"}
                   </button>
                 </div>
               </SimpleDetailForm>
             )}
-          </Formik>
+          </Formik> */}
         </div>
       </section>
 

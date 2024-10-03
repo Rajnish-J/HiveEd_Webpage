@@ -1,7 +1,8 @@
-import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { CgMenuMotion } from "react-icons/cg";
+import { useContactUs } from "./useContactUs";
 
 const NavListStyle =
   "text-base lg:text-lg font-normal relative cursor-pointer inline-block items-center  after:w-0 after:h-[3px] after:content-[''] after:bg-red-500 after:absolute after:left-0 after:bottom-[-4px] after:rounded after:opacity-0 after:transition-all after:duration-300  md:hover:after:w-full hover:after:opacity-100 whitespace-nowrap ";
@@ -108,31 +109,15 @@ const Navbar = () => {
 };
 
 const NavbarLinks = ({ className, toggleMenu }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [isContactUsActive, setIsContactUsActive] = useState(false);
 
-  const handleContactUsClick = (e) => {
-    e.preventDefault();
+  // Use custom hook for the contact us functionality
+  const { handleContactUsClick } = useContactUs(toggleMenu);
 
-    if (location.pathname === "/") {
-      // If already on the homepage,trigger scroll manually
-      const headerHeight = window.innerHeight * 0.03 + 80;
-      window.scrollTo({
-        top: document.getElementById("form-section").offsetTop - headerHeight,
-        behavior: "smooth",
-      });
-    } else {
-      navigate("/", { state: { scrollToForm: true } }); // Navigate to homepage with scrollToForm set to true
-    }
-    toggleMenu(); // Close the menu
+  const handleNavLinkClick = () => {
+    toggleMenu();
+    setIsContactUsActive(false);
   };
-
-  // useEffect(()=>{
-  //   if(location.state?.scrollToForm){
-  //     // Scroll to form when arriving at homepage
-
-  //   }
-  // })
 
   return (
     <div className={className}>
@@ -140,10 +125,11 @@ const NavbarLinks = ({ className, toggleMenu }) => {
         route.label === "Contact us" ? (
           <NavLink
             key={route.to}
-            onClick={(e) => handleContactUsClick(e)}
-            className={({ isActive }) =>
-              `${NavListStyle} hover:after:w-[${route.mobile_border_w}em] ${isActive ? "after:w-[4em] after:opacity-100 md:after:w-full" : ""}`
-            }
+            onClick={(e) => {
+              handleContactUsClick(e);
+              setIsContactUsActive(true);
+            }}
+            className={`${NavListStyle} hover:after:w-[${route.mobile_border_w}em] ${isContactUsActive ? "after:w-[4em] after:opacity-100 md:after:w-full" : ""}`}
           >
             {route.label}
           </NavLink>
@@ -154,7 +140,7 @@ const NavbarLinks = ({ className, toggleMenu }) => {
             className={({ isActive }) =>
               `${NavListStyle} hover:after:w-[${route.mobile_border_w}em] ${isActive ? "after:w-[4em] after:opacity-100 md:after:w-full" : ""}`
             }
-            onClick={() => toggleMenu()}
+            onClick={handleNavLinkClick}
           >
             {route.label}
           </NavLink>

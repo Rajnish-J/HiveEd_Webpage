@@ -122,6 +122,7 @@ const Courses = () => {
       <hr className="my-12 border-gray-400 sm:my-16" />
 
       <GeneralFormField
+        initialValues={{ name: "", number: "", message: "" }}
         type="number"
         validationSchema={validationSchema}
         labelName="Mobile Number"

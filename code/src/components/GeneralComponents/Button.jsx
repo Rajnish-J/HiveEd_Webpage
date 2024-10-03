@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Button = ({ children, to, type, onClick, hover }) => {
+const Button = ({ children, to, type, onClick, hover, disabled }) => {
   const base = "rounded-full px-4 py-2 md:px-6 cursor-pointer";
   const buttonHover = "transition-transform hover:scale-125";
 
@@ -19,12 +19,16 @@ const Button = ({ children, to, type, onClick, hover }) => {
 
   if (hover)
     return (
-      <button
-        className={`${styles[type]} ${buttonHover}`}
-      >
+      <button className={`${styles[type]} ${buttonHover}`}>{children}</button>
+    );
+
+  if (disabled) {
+    return (
+      <button type="submit" disabled={disabled} className={styles[type]}>
         {children}
       </button>
     );
+  }
 
   if (onClick)
     return (

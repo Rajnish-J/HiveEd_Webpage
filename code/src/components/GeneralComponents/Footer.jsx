@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
+import { useContactUs } from "./useContactUs";
 
 const CoursesList = [
-  { id: 1, text: "Explore HiveEd" },
+  { id: 1, text: "Explore HiveEd", to: "/courses " },
   // { id: 2, text: "Pricing" },
   // { id: 3, text: "Career Guidance" },
 ];
@@ -90,6 +91,13 @@ export default Footer;
 
 // Component for rendering footer list
 const FooterList = ({ title, list, className }) => {
+  const { handleContactUsClick } = useContactUs();
+
+  const handleLinkClick = () => {
+    // Scroll ot the top of the page
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <ul className={`flex flex-col gap-3 ${className}`}>
       <h3 className="font-bold">{title}</h3>
@@ -99,8 +107,12 @@ const FooterList = ({ title, list, className }) => {
           key={item.id}
           className="cursor-pointer hover:pl-4 hover:text-red-500"
         >
-          {item.to ? (
-            <Link to={item.to}>{item.text}</Link>
+          {item.text === "Help" ? (
+            <a onClick={handleContactUsClick}>{item.text}</a>
+          ) : item.to ? (
+            <Link to={item.to} onClick={handleLinkClick}>
+              {item.text}
+            </Link>
           ) : (
             <span>{item.text}</span>
           )}

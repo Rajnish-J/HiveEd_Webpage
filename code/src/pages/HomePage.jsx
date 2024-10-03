@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import * as Yup from "yup";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Button from "../components/GeneralComponents/Button";
 import {
@@ -63,6 +64,9 @@ const HomePage = () => {
 
   return (
     <>
+      {/* ToastContainer should be close to the top of your layout */}
+      {/* <ToastContainer position="top-right" autoClose={5000} hideProgressBar /> */}
+
       <section className="grid grid-cols-2 place-items-center gap-4 sm:grid-cols-[auto,auto,auto] sm:gap-x-6 lg:gap-x-16">
         <div className="col-span-2 sm:col-span-1">
           <h1 className="text-xl font-medium xs:text-3xl">
@@ -203,6 +207,7 @@ const HomePage = () => {
 
       <section className="my-20" id="form-section">
         <GeneralFormField
+        initialValues={{name:'',email:'',message:''}}
           type="email"
           validationSchema={validationSchema}
           labelName="Email"
@@ -212,9 +217,10 @@ const HomePage = () => {
           description2="Feel free to reach out, we'd love to hear from you"
           scrollToForm={scrollToForm}
         />
-      </section>
 
-      <ToastContainer />
+        {/* Add the ToastContainer here */}
+        <ToastContainer />
+      </section>
     </>
   );
 };

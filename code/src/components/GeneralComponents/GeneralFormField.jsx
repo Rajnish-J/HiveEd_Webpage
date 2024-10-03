@@ -4,9 +4,10 @@ import SendEmail from "../../api/SendEmail";
 import Button from "./Button";
 import { useEffect, useRef } from "react";
 
-const templateID = "";
+const templateID = "template_mx94qfi";
 
 const GeneralFormField = ({
+  initialValues,
   type,
   validationSchema,
   labelName,
@@ -17,7 +18,6 @@ const GeneralFormField = ({
   scrollToForm,
 }) => {
   const formRef = useRef(null);
-  const initialVal = type === "number" ? { number: "" } : { email: "" };
 
   useEffect(() => {
     if (scrollToForm && formRef.current) {
@@ -27,18 +27,31 @@ const GeneralFormField = ({
 
   return (
     <Formik
-      initialValues={{ name: "", ...initialVal, message: "" }}
+      // initialValues={{ name: "", email: "", message: "" }}
+      initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(values, { resetForm, setSubmitting }) => {
-        const extraVal =
+        const templateParams =
           type === "number"
-            ? { number: values.number }
-            : { email: values.email };
-        const templateParams = {
-          to_name: values.name,
-          ...extraVal,
-          message: values.message,
-        };
+            ? {
+                to_name: values.name,
+                number: values.number,
+                message: values.message,
+                from_name: "HiveEd",
+              }
+            : {
+                to_name: values.name,
+                to_email: values.email,
+                message: values.message,
+                from_name: "HiveEd",
+              };
+
+        // const templateParams = {
+        //   to_name: values.name,
+        //   to_email: values.email,
+        //   message: values.message,
+        //   from_name: "HiveEd",
+        // };
         SendEmail(
           resetForm,
           setSubmitting,
@@ -48,7 +61,7 @@ const GeneralFormField = ({
         );
       }}
     >
-      {() => (
+      {({ isSubmitting }) => (
         <SimpleDetailForm
           ref={formRef}
           className="grid grid-cols-1 gap-y-6 p-6 md:grid-cols-[auto,auto] md:gap-x-6 md:gap-y-0 md:p-10"
@@ -66,7 +79,9 @@ const GeneralFormField = ({
           />
           <InputField labelName="Message" name="message" rows={5} />
           <div>
-            <Button type="primary">Send</Button>
+            <Button disabled={isSubmitting} type="primary">
+              {isSubmitting ? "Sending..." : "Send"}
+            </Button>
           </div>
         </SimpleDetailForm>
       )}
