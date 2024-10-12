@@ -36,7 +36,7 @@ const Blog = () => {
 
         <div className="mx-[6vw] flex flex-col gap-y-16 xs:mx-[10vw] sm:gap-y-20 md:mx-[12vw] md:gap-y-28 lg:mx-[16vw]">
           {/* Youtube Video */}
-          <div className="grid grid-cols-1 gap-y-8 overflow-hidden rounded-xl bg-slate-50 p-4 drop-shadow-2xl sm:grid-cols-[auto,auto] sm:gap-x-8 sm:gap-y-0 sm:p-8 lg:gap-x-0">
+          <div className="grid grid-cols-1 gap-y-8 overflow-hidden rounded-xl bg-slate-50 p-4 drop-shadow-xl sm:grid-cols-[auto,auto] sm:gap-x-8 sm:gap-y-0 sm:p-8 lg:gap-x-0">
             <div className="text-center sm:text-start">
               <HeaderTwo
                 titleFirst="Youtube Video"
@@ -78,7 +78,7 @@ const Blog = () => {
               <Paragraph>Documentation</Paragraph>
             </div>
 
-            <div className="grid grid-cols-1 place-items-center gap-y-8 overflow-hidden rounded-xl bg-slate-50 px-4 py-3 drop-shadow-2xl sm:grid-cols-3">
+            <div className="grid grid-cols-1 place-items-center gap-y-8 overflow-hidden rounded-xl bg-slate-50 px-4 py-3 drop-shadow-xl sm:grid-cols-3">
               <ResourceIcon path="google_drive.png" alt="Google Drive" />
               <ResourceIcon path="github.png" alt="Github" />
               <ResourceIcon path="H_logo.png" alt="Documentation" />
