@@ -83,7 +83,7 @@ const AboutUs = () => {
             learners with credentials that hold value worldwide."
         />
 
-        <div className="my-24 grid place-items-center gap-6 md:grid-cols-3">
+        {/* <div className="my-24 grid place-items-center gap-6 md:grid-cols-3">
           <TeamMembers path="Murugesan.jpg" name="Murugesan A">
             Chief Research & Business Officer, Co-Founder
           </TeamMembers>
@@ -95,17 +95,17 @@ const AboutUs = () => {
           <TeamMembers path="Sanjay.jpg" name="Sanjay S">
             Chief Curriculum Officer, Co-Founder
           </TeamMembers>
-        </div>
+        </div> */}
 
-        <QuoteSection
+        {/* <QuoteSection
           text="HiveEd encourages a culture of continuous learning and adaptability.
             Learners are encouraged to explore a diverse range of courses to
             stay competitive in the ever-evolving world of education and work."
-        />
+        /> */}
       </section>
 
       {/* Our Team Section */}
-      <section className="my-16">
+      {/* <section className="my-16">
         <HeaderTwo titleFirst="Our Team" />
 
         <div className="mt-8 grid gap-4 text-center sm:grid-cols-2 lg:grid-cols-4">
@@ -123,7 +123,7 @@ const AboutUs = () => {
             Python Trainer
           </TeamMembers>
         </div>
-      </section>
+      </section> */}
 
       {/* Vision & Mission Section */}
       <section className="my-16">
